@@ -14,16 +14,16 @@
 
 <div align='center'>
   <a href = "LICENSE">
-     <img src = "https://img.shields.io/github/license/cgglyle/JlWiki.svg" alt = "LICENSE"/>
+     <img src = "https://img.shields.io/github/license/cgglyle/boson.svg" alt = "LICENSE"/>
   </a>
   <a href = "forks">
-     <img src = "https://img.shields.io/github/forks/cgglyle/JlWiki.svg" alt = "forks"/>
+     <img src = "https://img.shields.io/github/forks/cgglyle/boson.svg" alt = "forks"/>
   </a>
   <a href = "stars">
-     <img src = "https://img.shields.io/github/stars/cgglyle/JlWiki.svg" alt = "stars"/>
+     <img src = "https://img.shields.io/github/stars/cgglyle/boson.svg" alt = "stars"/>
   </a>
   <a href = "watchers">
-     <img src = "https://img.shields.io/github/watchers/cgglyle/JlWiki.svg" alt = "watchers"/>
+     <img src = "https://img.shields.io/github/watchers/cgglyle/boson.svg" alt = "watchers"/>
   </a>
 </div>
 
