@@ -1,19 +1,18 @@
-<div style="text-align:center">
+<div align='center'>
      此处有一张炫酷的头图
      <br/>
      <sub> (请自行脑补，笑) </sub>
 </div>
-<h1 style="text-align:center">
-     Boson </h1>
+<h1 align='center'> Boson </h1>
 
-<div style="text-align:center">
+<div align="center">
   <strong>波色子</strong>
   <sub><br>一个高性能的管理后端<br></sub>
 </div>
 
 <br>
 
-<div style="text-align:center">
+<div align='center'>
   <a href = "LICENSE">
      <img src = "https://img.shields.io/github/license/cgglyle/JlWiki.svg" alt = "LICENSE"/>
   </a>
@@ -28,7 +27,7 @@
   </a>
 </div>
 
-<div style="text-align:center">
+<div align="center">
   <sub>此架构由
     <a href="https://github.com/cgglyle">cgglyle</a> 和
     <a href="https://github.com/cgglyle/JlWiki/graphs/contributors">
