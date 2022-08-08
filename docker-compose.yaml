@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql:
+    restart: always
+    image: mysql
+    container_name: mysql-lable
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ~/boson/mysql/mydir:/mydir
+      - ~/boson/mysql/mysql:/var/lib/mysql
+      # 数据库还原目录 可将需要还原的sql文件放在这里
+      - ~/boson/mysql/source:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456"
+      - "MYSQL_USER=devUser"
+      - "MYSQL_PASSWORD=123456"
+      - "MYSQL_DATABASE=boson"
+      - "TZ=Asia/Shanghai"
+    ports:
+      # 使用宿主机的3306端口映射到容器的3306端口
+      # 宿主机：容器
+      - 3306:3306
+  mongo:
+    image: mongo # 选择mongodb版本
+    restart: always  # 自启动
+    ports:
+      - 27017:27017 # 映射宿主机端口
+    volumes:
+      - ~/boson/mongo/db:/data/db    # 挂载数据文件，根据实际路径修改 ：前的路径
+      - ~/boson/mongo/log:/var/log/mongodb  # 挂载日志文件，根据实际路径修改 ：前的路径
+      - ~/boson/mongo/config:/etc/mongo  # 挂载配置文件，根据实际路径修改 ：前的路径
