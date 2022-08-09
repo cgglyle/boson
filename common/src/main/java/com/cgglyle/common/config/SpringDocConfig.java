@@ -35,12 +35,4 @@ public class SpringDocConfig {
                 .packagesToScan("com.cgglyle.permissions.controller")
                 .build();
     }
-
-    @Bean
-    public GroupedOpenApi adminApi() {
-        return GroupedOpenApi.builder()
-                .group("admin")
-                .pathsToMatch("/admin/**")
-                .build();
-    }
 }

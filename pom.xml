@@ -8,6 +8,25 @@
         <module>permissions</module>
         <module>common</module>
     </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.cgglyle</groupId>
+                <artifactId>common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cgglyle</groupId>
+                <artifactId>application</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cgglyle</groupId>
+                <artifactId>permissions</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
