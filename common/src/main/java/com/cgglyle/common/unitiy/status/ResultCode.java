@@ -16,10 +16,11 @@ public enum ResultCode implements StatusCode {
     /**
      * 一级宏观错误类型
      */
-    CLIENT_ERROR("A0001", "客户端错误");
+    CLIENT_ERROR("A0001", "客户端错误"),
+    SYSTEM_ERROR("B0001", "系统错误");
 
-    private String code;
-    private String msg;
+    private final String code;
+    private final String msg;
 
     ResultCode(String code, String msg) {
         this.code = code;
