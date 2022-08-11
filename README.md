@@ -41,4 +41,5 @@
 在项目根目录执行`docker-compose up -d`来启动服务所需的数据库环境。  
 
 ### 注意
-您需要注意在根目录中的`docker-compose.yml`文件中的配置。
+您需要注意在根目录中的`docker-compose.yml`文件中的配置。在项目跟目录中有`boson.sql`SQL文件，你需要将SQL文件移动至
+`~/boson/mysql/source`目录中（如果没有需要自行创建`mkdir -p ~/boson/mysql/source`），在启动docker时，会自动将SQL语句执行，注入数据。
