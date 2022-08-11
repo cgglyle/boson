@@ -1,7 +1,6 @@
-package com.cgglyle.common.unitiy.controller;
+package com.cgglyle.common.unity.controller;
 
-import com.cgglyle.common.unitiy.status.ResultCode;
-import com.cgglyle.common.unitiy.status.ResultVo;
+import com.cgglyle.common.unity.status.ResultVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;
@@ -24,11 +23,11 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
         if (returnType.getGenericParameterType().equals(String.class)) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                return objectMapper.writeValueAsString(new ResultVo(body));
+                return objectMapper.writeValueAsString(ResultVo.success(body));
             } catch (JsonProcessingException e){
                 throw new RuntimeException(e.getMessage());
             }
         }
-        return new ResultVo(body);
+        return ResultVo.success(body);
     }
 }

@@ -1,4 +1,4 @@
-package com.cgglyle.common.unitiy.status;
+package com.cgglyle.common.unity.status;
 
 /**
  * 统一返回值接口

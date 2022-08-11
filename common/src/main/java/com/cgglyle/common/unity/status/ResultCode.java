@@ -1,4 +1,4 @@
-package com.cgglyle.common.unitiy.status;
+package com.cgglyle.common.unity.status;
 
 import lombok.Getter;
 
@@ -12,12 +12,7 @@ public enum ResultCode implements StatusCode {
     /**
      * 一切OK
      */
-    SUCCESS("00000", "请求成功"),
-    /**
-     * 一级宏观错误类型
-     */
-    CLIENT_ERROR("A0001", "客户端错误"),
-    SYSTEM_ERROR("B0001", "系统错误");
+    SUCCESS("00000", "请求成功");
 
     private final String code;
     private final String msg;
