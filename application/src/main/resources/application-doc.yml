@@ -1,6 +1,7 @@
 springdoc:
   swagger-ui:
-    display-request-duration: true
+    display-request-duration: false
+    enabled: false
   api-docs:
     enabled: true
     resolve-schema-properties: true
