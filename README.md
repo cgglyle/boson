@@ -30,7 +30,7 @@
 <div align="center">
   <sub>此架构由
     <a href="https://github.com/cgglyle">cgglyle</a> 和
-    <a href="https://github.com/cgglyle/JlWiki/graphs/contributors">
+    <a href="https://github.com/cgglyle/boson/graphs/contributors">
       贡献者们
     </a>
     倾力 ❤︎ 打造</sub>
