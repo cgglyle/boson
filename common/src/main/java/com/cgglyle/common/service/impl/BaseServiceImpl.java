@@ -6,7 +6,6 @@ import com.cgglyle.common.model.BaseEntity;
 import com.cgglyle.common.service.BaseService;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  * 顶级Service实现类
@@ -23,10 +22,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity>
      */
     @Override
     public boolean save(T entity) {
-        entity.setCreateTime(LocalDate.now());
-        entity.setUpdateTime(LocalDate.now());
         entity.setIsDeleted(false);
-        entity.setIsStatus(true);
+        entity.setIsStatus(false);
         return super.save(entity);
     }
 
@@ -49,6 +46,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity>
      */
     @Override
     public boolean removeById(Serializable id){
-        return false;
+        return super.removeById(id);
     }
 }

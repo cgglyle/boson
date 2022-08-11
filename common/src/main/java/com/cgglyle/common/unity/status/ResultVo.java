@@ -35,9 +35,15 @@ public class ResultVo<T> {
      * 返回指定状态码，数据对象
      */
     private ResultVo(StatusCode statusCode, T data) {
-        this.code = ResultCode.SUCCESS.getCode();
-        this.msg = ResultCode.SUCCESS.getMsg();
+        this.code = statusCode.getCode();
+        this.msg = statusCode.getMsg();
         this.data = data;
+    }
+
+    private ResultVo(StatusCode statusCode, String cause) {
+        this.code = statusCode.getCode();
+        this.msg = cause;
+        this.data = null;
     }
 
     /**
@@ -79,19 +85,23 @@ public class ResultVo<T> {
      * @return 返回体
      * @param <T> 返回体类型
      */
-    public static <T> ResultVo<T> error(StatusCode code, Throwable cause){
+    public static <T> ResultVo<T> error(StatusCode code, Throwable cause) {
         return new ResultVo<>(code, (T) cause.getMessage());
+    }
+
+    public static <T> ResultVo<T> error(StatusCode code, String cause) {
+        return new ResultVo<>(code, cause);
     }
 
     /**
      * 错误
      *
      * @param code 错误代码
-     * @param msg 错误信息
+     * @param msg  错误信息
+     * @param <T>  返回体类型
      * @return 返回体
-     * @param <T> 返回体类型
      */
-    public static <T> ResultVo<T> error(String code, String msg){
+    public static <T> ResultVo<T> error(String code, String msg) {
         return new ResultVo<>(code, msg, null);
     }
 
