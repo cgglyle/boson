@@ -11,6 +11,11 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+/**
+ * 全局统一返回值
+ *
+ * @author lyle
+ */
 @RestControllerAdvice(basePackages = {"com.cgglyle"})
 public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
