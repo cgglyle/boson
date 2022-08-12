@@ -30,9 +30,9 @@ public class SpringDocConfig {
     @Bean
     public GroupedOpenApi permissionApi() {
         return GroupedOpenApi.builder()
-                .group("permissionApi")
+                .group("Security API")
                 .pathsToMatch("/**")
-                .packagesToScan("com.cgglyle.permissions.controller")
+                .packagesToScan("com.cgglyle.security.controller")
                 .build();
     }
 }

@@ -1,8 +1,8 @@
-package com.cgglyle.permissions.controller;
+package com.cgglyle.security.controller;
 
-import com.cgglyle.permissions.model.UserEntity;
-import com.cgglyle.permissions.service.UserService;
-import com.cgglyle.permissions.vo.UserSaveVo;
+import com.cgglyle.security.model.UserEntity;
+import com.cgglyle.security.service.UserService;
+import com.cgglyle.security.vo.UserSaveVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

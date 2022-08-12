@@ -1,7 +1,7 @@
-package com.cgglyle.permissions.service;
+package com.cgglyle.security.service;
 
 import com.cgglyle.common.service.BaseService;
-import com.cgglyle.permissions.model.UserEntity;
+import com.cgglyle.security.model.UserEntity;
 
 /**
  * @author lylecgg
