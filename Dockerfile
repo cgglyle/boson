@@ -6,10 +6,8 @@ RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \&& echo 'Asia/Shan
 
 VOLUME /tmp
 
-ADD application/target/application-0.0.1-SNAPSHOT.jar application-0.0.1-SNAPSHOT.jar
-ADD common/target/common-0.0.1-SNAPSHOT.jar common-0.0.1-SNAPSHOT.jar
-ADD permissions/target/permissions-0.0.1-SNAPSHOT.jar permissions-0.0.1-SNAPSHOT.jar
+ADD application/target/application-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java", "-Xmx128m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/application-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Xmx128m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
 
 EXPOSE 8080
