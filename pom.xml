@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>application</module>
-        <module>permissions</module>
+        <module>security</module>
         <module>common</module>
         <module>logger</module>
     </modules>

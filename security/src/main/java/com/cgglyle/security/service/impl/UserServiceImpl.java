@@ -1,9 +1,9 @@
-package com.cgglyle.permissions.service.impl;
+package com.cgglyle.security.service.impl;
 
 import com.cgglyle.common.service.impl.BaseServiceImpl;
-import com.cgglyle.permissions.mapper.UserMapper;
-import com.cgglyle.permissions.model.UserEntity;
-import com.cgglyle.permissions.service.UserService;
+import com.cgglyle.security.mapper.UserMapper;
+import com.cgglyle.security.model.UserEntity;
+import com.cgglyle.security.service.UserService;
 import org.springframework.stereotype.Service;
 
 /**

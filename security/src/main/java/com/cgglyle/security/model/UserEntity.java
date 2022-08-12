@@ -1,4 +1,4 @@
-package com.cgglyle.permissions.model;
+package com.cgglyle.security.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cgglyle.common.model.BaseEntity;
