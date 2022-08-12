@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("per_user_info")
+@TableName("security_user_info")
 public class UserEntity extends BaseEntity {
     @NotEmpty(message = "名字不能为空")
     private String nickname;
