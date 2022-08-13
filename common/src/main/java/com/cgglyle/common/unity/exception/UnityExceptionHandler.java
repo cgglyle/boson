@@ -8,6 +8,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Objects;
 
 /**
@@ -65,5 +66,18 @@ public class UnityExceptionHandler {
         log.error(ClientErrorCode.DATA_ERROR.getMsg(), e);
         return ResultVo.error(ClientErrorCode.DATA_ERROR,
                 Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage());
+    }
+
+    /**
+     * 数据异常
+     * <p>
+     * 各种数据有效性异常
+     *
+     * @return 返回错误代码，错误信息，错误位置
+     */
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResultVo<String> exceptionHandler(ConstraintViolationException e) {
+        log.error(ClientErrorCode.DATA_ERROR.getMsg(), e);
+        return ResultVo.error(ClientErrorCode.DATA_ERROR, e);
     }
 }
