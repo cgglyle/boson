@@ -34,6 +34,14 @@ public abstract class BaseEntity implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @Schema(description = "创建用户ID")
+    @TableField(value = "create_user_id", fill = FieldFill.INSERT)
+    private Long createUserId;
+
+    @Schema(description = "更新用户ID")
+    @TableField(value = "update_user_id", fill = FieldFill.INSERT_UPDATE)
+    private Long updateUserId;
+
     @Schema(description = "逻辑删除值('false'=>未删除，'ture'=>已删除)")
     @TableField("is_deleted")
     private Boolean isDeleted;

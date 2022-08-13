@@ -5,7 +5,7 @@ import com.cgglyle.logger.enums.LogMethodEnum;
 import com.cgglyle.logger.enums.LogModuleEnum;
 import com.cgglyle.security.model.UserEntity;
 import com.cgglyle.security.service.UserService;
-import com.cgglyle.security.vo.UserSaveVo;
+import com.cgglyle.security.query.UserSaveQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -41,11 +41,13 @@ public class UserController {
     @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SAVE, explain = "添加用户")
     @Operation(summary = "添加用户")
     @PostMapping("/user")
-    public boolean save(@RequestBody @Valid UserSaveVo vo, BindingResult bindingResult) {
+    public boolean save(@RequestBody @Valid UserSaveQuery vo, BindingResult bindingResult) {
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(vo, userEntity);
         return userService.save(userEntity);
     }
+
+
 
     @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.DELETED, explain = "删除用户")
     @Operation(summary = "删除用户")

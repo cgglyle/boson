@@ -1,4 +1,4 @@
-package com.cgglyle.security.vo;
+package com.cgglyle.security.query;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Schema(description = "用户添加实体")
 @Data
-public class UserSaveVo {
+public class UserSaveQuery {
     @Schema(description = "别名")
     @NotBlank(message = "别名不能为空")
     private String nickname;
