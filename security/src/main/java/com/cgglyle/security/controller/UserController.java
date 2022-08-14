@@ -3,7 +3,7 @@ package com.cgglyle.security.controller;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
 import com.cgglyle.logger.enums.LogModuleEnum;
-import com.cgglyle.security.model.UserEntity;
+import com.cgglyle.security.model.entity.UserEntity;
 import com.cgglyle.security.query.UserSaveQuery;
 import com.cgglyle.security.service.IUserService;
 import com.cgglyle.security.vo.UserVo;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author lylecgg
  */
-@Tag(name = "user")
+@Tag(name = "User")
 @Slf4j
 @Validated
 @CrossOrigin
@@ -69,7 +69,7 @@ public class UserController {
 
     @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
-    @GetMapping("/counts")
+    @GetMapping("/users/counts")
     public long count() {
         return IUserService.count();
     }

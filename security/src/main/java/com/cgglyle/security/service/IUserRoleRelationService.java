@@ -1,7 +1,7 @@
 package com.cgglyle.security.service;
 
 import com.cgglyle.common.service.BaseService;
-import com.cgglyle.security.model.UserRoleRelationEntity;
+import com.cgglyle.security.model.entity.UserRoleRelationEntity;
 
 /**
  * @author lyle

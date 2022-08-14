@@ -2,7 +2,7 @@ package com.cgglyle.security.service.impl;
 
 import com.cgglyle.common.service.impl.BaseServiceImpl;
 import com.cgglyle.security.mapper.RoleMapper;
-import com.cgglyle.security.model.RoleEntity;
+import com.cgglyle.security.model.entity.RoleEntity;
 import com.cgglyle.security.service.IRoleService;
 import org.springframework.stereotype.Service;
 

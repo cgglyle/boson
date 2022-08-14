@@ -21,3 +21,15 @@ spring:
       host: localhost
       port: 27017
       database: boson
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+    connect-timeout: 30000ms

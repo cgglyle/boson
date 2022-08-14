@@ -3,7 +3,7 @@ package com.cgglyle.security.controller;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
 import com.cgglyle.logger.enums.LogModuleEnum;
-import com.cgglyle.security.model.UserRoleRelationEntity;
+import com.cgglyle.security.model.entity.UserRoleRelationEntity;
 import com.cgglyle.security.query.UserRoleRelationSaveQuery;
 import com.cgglyle.security.service.IUserRoleRelationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +28,7 @@ import java.util.List;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/userRoleRelation")
+@RequestMapping(value = "/users")
 @RequiredArgsConstructor
 public class UserRoleRelationController {
 

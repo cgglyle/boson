@@ -3,7 +3,7 @@ package com.cgglyle.security.controller;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
 import com.cgglyle.logger.enums.LogModuleEnum;
-import com.cgglyle.security.model.RoleEntity;
+import com.cgglyle.security.model.entity.RoleEntity;
 import com.cgglyle.security.query.RoleSaveQuery;
 import com.cgglyle.security.service.IRoleService;
 import com.cgglyle.security.vo.RoleVo;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author lyle
  * @date 2022/08/13
  */
-@Tag(name = "role")
+@Tag(name = "Role", description = "角色控制器")
 @Slf4j
 @Validated
 @CrossOrigin
@@ -71,7 +71,7 @@ public class RoleController {
 
     @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
-    @GetMapping("/counts")
+    @GetMapping("/roles/counts")
     public long count() {
         return IRoleService.count();
     }

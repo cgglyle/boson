@@ -1,7 +1,7 @@
 package com.cgglyle.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cgglyle.security.model.UserRoleRelationEntity;
+import com.cgglyle.security.model.entity.UserRoleRelationEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

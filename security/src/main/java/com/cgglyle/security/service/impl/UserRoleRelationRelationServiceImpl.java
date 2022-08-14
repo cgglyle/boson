@@ -2,7 +2,7 @@ package com.cgglyle.security.service.impl;
 
 import com.cgglyle.common.service.impl.BaseServiceImpl;
 import com.cgglyle.security.mapper.UserRoleRelationMapper;
-import com.cgglyle.security.model.UserRoleRelationEntity;
+import com.cgglyle.security.model.entity.UserRoleRelationEntity;
 import com.cgglyle.security.service.IUserRoleRelationService;
 import org.springframework.stereotype.Service;
 
