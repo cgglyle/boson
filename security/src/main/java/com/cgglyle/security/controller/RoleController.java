@@ -6,6 +6,7 @@ import com.cgglyle.logger.enums.LogModuleEnum;
 import com.cgglyle.security.model.RoleEntity;
 import com.cgglyle.security.query.RoleSaveQuery;
 import com.cgglyle.security.service.IRoleService;
+import com.cgglyle.security.vo.RoleVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ import java.util.List;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/role")
+@RequestMapping(value = "/")
 @RequiredArgsConstructor
 public class RoleController {
 
@@ -36,15 +37,24 @@ public class RoleController {
 
     @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查找角色")
     @Operation(summary = "查看角色")
-    @GetMapping("/role")
+    @GetMapping("/roles")
     public List<RoleEntity> list() {
         return IRoleService.list();
+    }
+
+    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "根据ID查找角色")
+    @Operation(summary = "根据ID查找角色")
+    @GetMapping("/roles/{id}")
+    public RoleVo getById(@PathVariable(value = "id") Long id){
+        RoleVo roleVo = new RoleVo();
+        BeanUtils.copyProperties(IRoleService.getById(id), roleVo);
+        return roleVo;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SAVE, explain = "添加角色")
     @Operation(summary = "添加角色")
-    @PostMapping("/role")
+    @PostMapping("/roles")
     public boolean save(@RequestBody @Valid RoleSaveQuery vo, BindingResult bindingResult) {
         RoleEntity roleEntity = new RoleEntity();
         BeanUtils.copyProperties(vo, roleEntity);
@@ -54,14 +64,14 @@ public class RoleController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.DELETED, explain = "删除角色")
     @Operation(summary = "删除角色")
-    @DeleteMapping("/role")
+    @DeleteMapping("/roles")
     public boolean remove(Long id) {
         return IRoleService.removeById(id);
     }
 
     @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
-    @GetMapping("/count")
+    @GetMapping("/counts")
     public long count() {
         return IRoleService.count();
     }
