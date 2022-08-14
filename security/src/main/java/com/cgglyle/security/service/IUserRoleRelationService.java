@@ -7,5 +7,5 @@ import com.cgglyle.security.model.UserRoleRelationEntity;
  * @author lyle
  * @date 2022/08/13
  */
-public interface UserRoleRelationService extends BaseService<UserRoleRelationEntity> {
+public interface IUserRoleRelationService extends BaseService<UserRoleRelationEntity> {
 }

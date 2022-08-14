@@ -49,4 +49,8 @@ public abstract class BaseEntity implements Serializable {
     @Schema(description = "状态值('false'=>正常，'ture'=>异常)")
     @TableField("is_status")
     private Boolean isStatus;
+
+    @Schema(description = "是否是内置角色('false'=>不是，'ture'=>是)")
+    @TableField("is_built_in")
+    private Boolean isBuiltIn;
 }

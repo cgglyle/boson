@@ -13,9 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class UserRoleRelationSaveQuery {
     @NotNull(message = "用户ID不能为空")
-    @Schema(description = "用户ID")
     private Long userId;
     @NotNull(message = "角色ID不能为空")
-    @Schema(description = "角色ID")
     private Long roleId;
 }

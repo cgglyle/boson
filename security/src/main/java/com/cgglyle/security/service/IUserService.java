@@ -6,6 +6,6 @@ import com.cgglyle.security.model.UserEntity;
 /**
  * @author lylecgg
  */
-public interface UserService extends BaseService<UserEntity> {
+public interface IUserService extends BaseService<UserEntity> {
 
 }

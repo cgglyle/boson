@@ -7,5 +7,5 @@ import com.cgglyle.security.model.RoleEntity;
  * @author lyle
  * @date 2022/08/13
  */
-public interface RoleService extends BaseService<RoleEntity> {
+public interface IRoleService extends BaseService<RoleEntity> {
 }
