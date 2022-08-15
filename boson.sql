@@ -36,7 +36,7 @@ CREATE TABLE `security_role_info` (
   `is_deleted` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `security_role_info_role_code_uindex` (`role_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限系统\n角色信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限系统\n角色信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `security_role_info` (
 
 LOCK TABLES `security_role_info` WRITE;
 /*!40000 ALTER TABLE `security_role_info` DISABLE KEYS */;
-INSERT INTO `security_role_info` VALUES (1,'boson','波色子','系统超级管理员','2022-08-12 11:41:40','2022-08-12 11:41:41',1,1,0,1,0),(2,'admin','管理员','管理员','2022-08-12 11:42:56','2022-08-12 11:42:57',1,1,0,1,0),(3,'test','测试员','测试员','2022-08-12 11:43:29','2022-08-12 11:43:30',1,1,0,1,0),(4,'user','用户','用户','2022-08-12 11:43:56','2022-08-12 11:43:55',1,1,0,1,0),(5,'dba','数据库管理员','数据库管理员','2022-08-14 18:49:18','2022-08-14 18:49:19',1,1,0,1,0),(7,'anonymous','匿名用户','匿名用户','2022-08-14 18:50:44','2022-08-14 18:50:45',1,1,0,1,0);
+INSERT INTO `security_role_info` VALUES (1,'boson','波色子','系统超级管理员','2022-08-12 11:41:40','2022-08-12 11:41:41',1,1,0,1,0),(2,'admin','管理员','管理员','2022-08-12 11:42:56','2022-08-12 11:42:57',1,1,0,1,0),(3,'test','测试员','测试员','2022-08-12 11:43:29','2022-08-12 11:43:30',1,1,0,1,0),(4,'user','用户','用户','2022-08-12 11:43:56','2022-08-12 11:43:55',1,1,0,1,0),(5,'dba','数据库管理员','数据库管理员','2022-08-14 18:49:18','2022-08-14 18:49:19',1,1,0,1,0),(7,'anonymous','匿名用户','匿名用户','2022-08-14 18:50:44','2022-08-14 18:50:45',1,1,0,1,0),(8,'test1','test1','test1','2022-08-15 11:53:00','2022-08-15 11:53:00',1,1,0,0,0),(9,'test2','test2','test2','2022-08-15 11:53:11','2022-08-15 11:53:11',1,1,0,0,0);
 /*!40000 ALTER TABLE `security_role_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `security_role_inheritance` (
   `is_built_in` tinyint unsigned NOT NULL DEFAULT '0',
   `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色继承关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色继承关系表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `security_role_inheritance` (
 
 LOCK TABLES `security_role_inheritance` WRITE;
 /*!40000 ALTER TABLE `security_role_inheritance` DISABLE KEYS */;
-INSERT INTO `security_role_inheritance` VALUES (1,1,0,'2022-08-14 18:53:43','2022-08-14 18:53:45',1,1,0,1,0),(2,2,1,'2022-08-14 18:54:06','2022-08-14 18:54:07',1,1,0,1,0),(3,5,1,'2022-08-14 18:54:28','2022-08-14 18:54:29',1,1,0,1,0),(4,3,5,'2022-08-14 18:56:09','2022-08-14 18:56:12',1,1,0,1,0);
+INSERT INTO `security_role_inheritance` VALUES (1,1,0,'2022-08-14 18:53:43','2022-08-14 18:53:45',1,1,0,1,0),(2,2,1,'2022-08-14 18:54:06','2022-08-14 18:54:07',1,1,0,1,0),(3,5,1,'2022-08-14 18:54:28','2022-08-14 18:54:29',1,1,0,1,0),(4,3,5,'2022-08-14 18:56:09','2022-08-14 18:56:12',1,1,0,1,0),(5,8,3,'2022-08-15 11:54:57','2022-08-15 11:54:57',1,1,0,0,0),(6,9,8,'2022-08-15 11:55:18','2022-08-15 11:55:18',1,1,0,0,0),(7,4,8,'2022-08-15 14:35:01','2022-08-15 14:35:01',1,1,0,0,0),(8,4,9,'2022-08-15 14:35:05','2022-08-15 14:35:05',1,1,0,0,0),(9,4,2,'2022-08-15 15:16:10','2022-08-15 15:16:10',1,1,0,0,0);
 /*!40000 ALTER TABLE `security_role_inheritance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,4 +159,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-14 20:55:32
+-- Dump completed on 2022-08-15 15:53:10
