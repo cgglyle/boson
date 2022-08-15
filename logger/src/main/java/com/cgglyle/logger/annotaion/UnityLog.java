@@ -1,7 +1,6 @@
 package com.cgglyle.logger.annotaion;
 
 import com.cgglyle.logger.enums.LogMethodEnum;
-import com.cgglyle.logger.enums.LogModuleEnum;
 
 import java.lang.annotation.*;
 
@@ -37,7 +36,7 @@ public @interface UnityLog {
     /**
      * 模块
      */
-    LogModuleEnum module();
+    String module();
 
     /**
      * 方法

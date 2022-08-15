@@ -110,7 +110,7 @@ public class UnityLogAspect {
                 resolveReference(RequestAttributes.REFERENCE_REQUEST);
         assert httpServletRequest != null;
         Map<String, Object> logContext = new HashMap<>();
-        logContext.put(MODULE, unityLog.module().getModuleName());
+        logContext.put(MODULE, unityLog.module());
         logContext.put(METHOD, unityLog.method().getMethodName());
         logContext.put(EXPLAIN, unityLog.explain());
         logContext.put(URL, httpServletRequest.getRequestURL());

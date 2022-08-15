@@ -2,7 +2,6 @@ package com.cgglyle.security.controller;
 
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
-import com.cgglyle.logger.enums.LogModuleEnum;
 import com.cgglyle.security.model.entity.UserRoleRelationEntity;
 import com.cgglyle.security.query.UserRoleRelationSaveQuery;
 import com.cgglyle.security.service.IUserRoleRelationService;
@@ -34,7 +33,9 @@ public class UserRoleRelationController {
 
     private final IUserRoleRelationService IUserRoleRelationService;
 
-    @UnityLog(module = LogModuleEnum.SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SEARCH, explain = "查找用户角色关系")
+    private static final String SECURITY_USER_ROLE_RELATION = "安全-用户角色关系模块";
+
+    @UnityLog(module = SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SEARCH, explain = "查找用户角色关系")
     @Operation(summary = "查看用户角色关系")
     @GetMapping("/userRoleRelation")
     public List<UserRoleRelationEntity> list() {
@@ -42,7 +43,7 @@ public class UserRoleRelationController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @UnityLog(module = LogModuleEnum.SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SAVE, explain = "添加用户角色关系")
+    @UnityLog(module = SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SAVE, explain = "添加用户角色关系")
     @Operation(summary = "添加用户角色关系")
     @PostMapping("/userRoleRelation")
     public boolean save(@RequestBody @Valid UserRoleRelationSaveQuery vo, BindingResult bindingResult) {
@@ -52,14 +53,14 @@ public class UserRoleRelationController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @UnityLog(module = LogModuleEnum.SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.DELETED, explain = "删除用户角色关系")
+    @UnityLog(module = SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.DELETED, explain = "删除用户角色关系")
     @Operation(summary = "删除用户角色关系")
     @DeleteMapping("/userRoleRelation")
     public boolean remove(Long id) {
         return IUserRoleRelationService.removeById(id);
     }
 
-    @UnityLog(module = LogModuleEnum.SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SEARCH, explain = "查询总数")
+    @UnityLog(module = SECURITY_USER_ROLE_RELATION, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
     @GetMapping("/count")
     public long count() {

@@ -2,7 +2,6 @@ package com.cgglyle.security.controller;
 
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
-import com.cgglyle.logger.enums.LogModuleEnum;
 import com.cgglyle.security.model.entity.UserEntity;
 import com.cgglyle.security.query.UserSaveQuery;
 import com.cgglyle.security.service.IUserService;
@@ -33,14 +32,16 @@ import java.util.List;
 public class UserController {
     private final IUserService IUserService;
 
-    @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查找用户")
+    private static final String SECURITY_USER = "安全-用户模块";
+
+    @UnityLog(module = SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查找用户")
     @Operation(summary = "查看用户")
     @GetMapping("/users")
     public List<UserEntity> list() {
         return IUserService.list();
     }
 
-    @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "根据ID查找用户")
+    @UnityLog(module = SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "根据ID查找用户")
     @Operation(summary = "根据ID查找用户")
     @GetMapping("/users/{id}")
     public UserVo getById(@PathVariable(value = "id") Long id){
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SAVE, explain = "添加用户")
+    @UnityLog(module = SECURITY_USER, method = LogMethodEnum.SAVE, explain = "添加用户")
     @Operation(summary = "添加用户")
     @PostMapping("/users")
     public boolean save(@RequestBody @Valid UserSaveQuery vo, BindingResult bindingResult) {
@@ -60,14 +61,14 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.DELETED, explain = "删除用户")
+    @UnityLog(module = SECURITY_USER, method = LogMethodEnum.DELETED, explain = "删除用户")
     @Operation(summary = "删除用户")
     @DeleteMapping("/users")
     public void remove(Long id) {
         IUserService.removeById(id);
     }
 
-    @UnityLog(module = LogModuleEnum.SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查询总数")
+    @UnityLog(module = SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
     @GetMapping("/users/counts")
     public long count() {

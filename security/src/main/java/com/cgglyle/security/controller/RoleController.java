@@ -2,7 +2,6 @@ package com.cgglyle.security.controller;
 
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
-import com.cgglyle.logger.enums.LogModuleEnum;
 import com.cgglyle.security.model.entity.RoleEntity;
 import com.cgglyle.security.query.RoleSaveQuery;
 import com.cgglyle.security.service.IRoleService;
@@ -35,14 +34,16 @@ public class RoleController {
 
     private final IRoleService IRoleService;
 
-    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查找角色")
+    private static final String SECURITY_ROLE = "安全-角色模块";
+
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查找角色")
     @Operation(summary = "查看角色")
     @GetMapping("/roles")
     public List<RoleEntity> list() {
         return IRoleService.list();
     }
 
-    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "根据ID查找角色")
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "根据ID查找角色")
     @Operation(summary = "根据ID查找角色")
     @GetMapping("/roles/{id}")
     public RoleVo getById(@PathVariable(value = "id") Long id){
@@ -52,7 +53,7 @@ public class RoleController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SAVE, explain = "添加角色")
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SAVE, explain = "添加角色")
     @Operation(summary = "添加角色")
     @PostMapping("/roles")
     public boolean save(@RequestBody @Valid RoleSaveQuery vo, BindingResult bindingResult) {
@@ -62,14 +63,14 @@ public class RoleController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.DELETED, explain = "删除角色")
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.DELETED, explain = "删除角色")
     @Operation(summary = "删除角色")
     @DeleteMapping("/roles")
     public boolean remove(Long id) {
         return IRoleService.removeById(id);
     }
 
-    @UnityLog(module = LogModuleEnum.SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查询总数")
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "查询总数")
     @Operation(summary = "查询总数")
     @GetMapping("/roles/counts")
     public long count() {
