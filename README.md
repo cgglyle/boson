@@ -43,3 +43,5 @@
 #### 注意
 您需要注意在根目录中的`docker-compose.yml`文件中的配置。在项目跟目录中有`boson.sql`SQL文件，你需要将SQL文件移动至
 `~/boson/mysql/source`目录中（如果没有需要自行创建`mkdir -p ~/boson/mysql/source`），在启动docker时，会自动将SQL语句执行，注入数据。
+
+在MacOS环境开发本项目时注意修改`application`中的`log4j2.xml`文件中的日志存放目录，以免出现无法创建日志的情况。
