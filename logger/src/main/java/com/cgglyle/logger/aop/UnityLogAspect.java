@@ -1,10 +1,14 @@
 package com.cgglyle.logger.aop;
 
 import com.cgglyle.logger.annotaion.UnityLog;
+import com.cgglyle.logger.enums.LogFormatEnum;
+import com.cgglyle.logger.event.UnityLogEvent;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.context.request.RequestAttributes;
@@ -22,19 +26,11 @@ import java.util.*;
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class UnityLogAspect {
-    private static final String START = "(业务日志)";
-    private static final String MODULE = " [module]=";
-    private static final String METHOD = " [method]=";
-    private static final String EXPLAIN = " [explain]=";
-    private static final String URL = " [url]=";
-    private static final String URI = " [uri]=";
-    private static final String CLASS_NAME = " [className]=";
-    private static final String ARGS = " [入参]=";
-    private static final String BODY = " [出参]=";
-    private static final String TIME = " [耗时]=";
-    private static final String EXCEPTION = " (异常)";
-    private static final String MS = "ms";
+
+    private final Map<String, Object> logContext = new HashMap<>();
+    private final ApplicationContext applicationContext;
 
     /**
      * 正常切入点，包含验证
@@ -65,8 +61,7 @@ public class UnityLogAspect {
      */
     @AfterReturning(value = "unityLogCut()", returning = "body")
     public void doAfterReturning(Object body) {
-        Map<String, Object> context = LogContext.getContext();
-        context.put(BODY, body);
+        logContext.put(LogFormatEnum.BODY.getFormName(), body);
     }
 
     /**
@@ -77,11 +72,8 @@ public class UnityLogAspect {
         long startTime = System.currentTimeMillis();
         Object body = proceedingJoinPoint.proceed();
         long takeTime = System.currentTimeMillis() - startTime;
-        Map<String, Object> context = LogContext.getContext();
-        log.info(START + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
-                EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
-                CLASS_NAME + context.get(CLASS_NAME) + ARGS + context.get(ARGS) +
-                BODY + context.get(BODY) + TIME + takeTime + MS);
+        logContext.put(LogFormatEnum.TIME.getFormName(), takeTime);
+        applicationContext.publishEvent(new UnityLogEvent(logContext));
         return body;
     }
 
@@ -90,11 +82,8 @@ public class UnityLogAspect {
      */
     @AfterThrowing(value = "unityExceptionLogCut()", throwing = "throwable")
     public void doAfterThrowing(Throwable throwable) {
-        Map<String, Object> context = LogContext.getContext();
-        log.error(START + EXCEPTION + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
-                EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
-                CLASS_NAME + context.get(CLASS_NAME) + ARGS + context.get(ARGS) +
-                BODY + context.get(BODY) + EXCEPTION + throwable);
+        logContext.put(LogFormatEnum.EXCEPTION.getFormName(), throwable);
+        applicationContext.publishEvent(new UnityLogEvent(logContext));
     }
 
     /**
@@ -109,20 +98,19 @@ public class UnityLogAspect {
         HttpServletRequest httpServletRequest = (HttpServletRequest) requestAttributes.
                 resolveReference(RequestAttributes.REFERENCE_REQUEST);
         assert httpServletRequest != null;
-        Map<String, Object> logContext = new HashMap<>();
-        logContext.put(MODULE, unityLog.module());
-        logContext.put(METHOD, unityLog.method().getMethodName());
-        logContext.put(EXPLAIN, unityLog.explain());
-        logContext.put(URL, httpServletRequest.getRequestURL());
-        logContext.put(URI, httpServletRequest.getRequestURI());
-        logContext.put(CLASS_NAME, joinPoint.getSignature().getDeclaringTypeName() + "." +
+        logContext.clear();
+        logContext.put(LogFormatEnum.MODULE.getFormName(), unityLog.module());
+        logContext.put(LogFormatEnum.METHOD.getFormName(), unityLog.method().getMethodName());
+        logContext.put(LogFormatEnum.EXPLAIN.getFormName(), unityLog.explain());
+        logContext.put(LogFormatEnum.URL.getFormName(), httpServletRequest.getRequestURL());
+        logContext.put(LogFormatEnum.URI.getFormName(), httpServletRequest.getRequestURI());
+        logContext.put(LogFormatEnum.CLASS_NAME.getFormName(), joinPoint.getSignature().getDeclaringTypeName() + "." +
                 joinPoint.getSignature().getName());
         // 移除数据验证信息
         List<Object> objects = Arrays.asList(joinPoint.getArgs());
         List<Object> list = new ArrayList<>(objects);
         list.removeIf(m->m.getClass().equals(BeanPropertyBindingResult.class));
-        logContext.put(ARGS, Arrays.toString(list.toArray()));
+        logContext.put(LogFormatEnum.ARGS.getFormName(), Arrays.toString(list.toArray()));
         //TODO: 添加请求用户ID
-        new LogContext(logContext);
     }
 }
