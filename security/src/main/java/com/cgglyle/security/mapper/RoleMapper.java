@@ -1,12 +1,13 @@
 package com.cgglyle.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cgglyle.security.model.entity.UserEntity;
+import com.cgglyle.security.model.entity.RoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author lylecgg
+ * @author lyle
+ * @date 2022/08/13
  */
 @Mapper
-public interface UserMapper extends BaseMapper<UserEntity> {
+public interface RoleMapper extends BaseMapper<RoleEntity> {
 }

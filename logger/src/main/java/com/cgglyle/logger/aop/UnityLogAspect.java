@@ -2,18 +2,16 @@ package com.cgglyle.logger.aop;
 
 import com.cgglyle.logger.annotaion.UnityLog;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 统一日志AOP
@@ -37,7 +35,6 @@ public class UnityLogAspect {
     private static final String TIME = " [耗时]=";
     private static final String EXCEPTION = " (异常)";
     private static final String MS = "ms";
-    private static final String VALIDATED_ERROR_INFO = "org.springframework.validation.BeanPropertyBindingResult: 1 errors";
 
     /**
      * 正常切入点，包含验证
@@ -83,8 +80,7 @@ public class UnityLogAspect {
         Map<String, Object> context = LogContext.getContext();
         log.info(START + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
                 EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
-                CLASS_NAME + context.get(CLASS_NAME) + ARGS +
-                StringUtils.substringBeforeLast((String) context.get(ARGS), ", ") +
+                CLASS_NAME + context.get(CLASS_NAME) + ARGS + context.get(ARGS) +
                 BODY + context.get(BODY) + TIME + takeTime + MS);
         return body;
     }
@@ -95,22 +91,10 @@ public class UnityLogAspect {
     @AfterThrowing(value = "unityExceptionLogCut()", throwing = "throwable")
     public void doAfterThrowing(Throwable throwable) {
         Map<String, Object> context = LogContext.getContext();
-
-        // 判断异常是否是数据错误造成的
-        if (StringUtils.contains((String) context.get(ARGS), VALIDATED_ERROR_INFO)) {
-            // 存在数据异常时走这里
-            log.error(START + EXCEPTION + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
-                    EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
-                    CLASS_NAME + context.get(CLASS_NAME) + ARGS +
-                    StringUtils.substringBeforeLast((String) context.get(ARGS), ", ") +
-                    BODY + context.get(BODY) + EXCEPTION + throwable);
-        } else {
-            // 不存在数据异常时走这里
-            log.error(START + EXCEPTION + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
-                    EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
-                    CLASS_NAME + context.get(CLASS_NAME) + ARGS + context.get(ARGS) +
-                    BODY + context.get(BODY) + EXCEPTION + throwable);
-        }
+        log.error(START + EXCEPTION + MODULE + context.get(MODULE) + METHOD + context.get(METHOD) +
+                EXPLAIN + context.get(EXPLAIN) + URL + context.get(URL) + URI + context.get(URI) +
+                CLASS_NAME + context.get(CLASS_NAME) + ARGS + context.get(ARGS) +
+                BODY + context.get(BODY) + EXCEPTION + throwable);
     }
 
     /**
@@ -126,14 +110,18 @@ public class UnityLogAspect {
                 resolveReference(RequestAttributes.REFERENCE_REQUEST);
         assert httpServletRequest != null;
         Map<String, Object> logContext = new HashMap<>();
-        logContext.put(MODULE, unityLog.module().getModuleName());
+        logContext.put(MODULE, unityLog.module());
         logContext.put(METHOD, unityLog.method().getMethodName());
         logContext.put(EXPLAIN, unityLog.explain());
         logContext.put(URL, httpServletRequest.getRequestURL());
         logContext.put(URI, httpServletRequest.getRequestURI());
         logContext.put(CLASS_NAME, joinPoint.getSignature().getDeclaringTypeName() + "." +
                 joinPoint.getSignature().getName());
-        logContext.put(ARGS, Arrays.toString(joinPoint.getArgs()));
+        // 移除数据验证信息
+        List<Object> objects = Arrays.asList(joinPoint.getArgs());
+        List<Object> list = new ArrayList<>(objects);
+        list.removeIf(m->m.getClass().equals(BeanPropertyBindingResult.class));
+        logContext.put(ARGS, Arrays.toString(list.toArray()));
         //TODO: 添加请求用户ID
         new LogContext(logContext);
     }

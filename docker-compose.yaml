@@ -29,3 +29,15 @@ services:
       - ~/boson/mongo/db:/data/db    # 挂载数据文件，根据实际路径修改 ：前的路径
       - ~/boson/mongo/log:/var/log/mongodb  # 挂载日志文件，根据实际路径修改 ：前的路径
       - ~/boson/mongo/config:/etc/mongo  # 挂载配置文件，根据实际路径修改 ：前的路径
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+#    privileged: true
+#    command: redis-server /etc/redis/redis.conf --appendonly yes
+#    volumes:
+#      - $PWD/data:/data
+#      - $PWD/conf/redis.conf:/etc/redis/redis.conf
