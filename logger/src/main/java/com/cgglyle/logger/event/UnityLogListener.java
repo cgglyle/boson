@@ -25,6 +25,7 @@ public class UnityLogListener {
         Map<String, Object> source = (Map<String, Object>) event.getSource();
         if (source.containsKey(LogFormatEnum.EXCEPTION.getFormName())){
             log.error(LogFormatEnum.START.getFormName() + LogFormatEnum.EXCEPTION.getFormName() +
+                    LogFormatEnum.START_TIME.getFormName() + source.get(LogFormatEnum.START_TIME.getFormName()) +
                     LogFormatEnum.MODULE.getFormName() + source.get(LogFormatEnum.MODULE.getFormName()) +
                     LogFormatEnum.METHOD.getFormName() + source.get(LogFormatEnum.METHOD.getFormName()) +
                     LogFormatEnum.EXPLAIN.getFormName() + source.get(LogFormatEnum.EXPLAIN.getFormName()) +
@@ -37,16 +38,17 @@ public class UnityLogListener {
         }
         else {
             log.info(LogFormatEnum.START.getFormName() +
-                LogFormatEnum.MODULE.getFormName() + source.get(LogFormatEnum.MODULE.getFormName()) +
-                LogFormatEnum.METHOD.getFormName() + source.get(LogFormatEnum.METHOD.getFormName()) +
-                LogFormatEnum.EXPLAIN.getFormName() + source.get(LogFormatEnum.EXPLAIN.getFormName()) +
-                LogFormatEnum.URL.getFormName() + source.get(LogFormatEnum.URL.getFormName()) +
-                LogFormatEnum.URI.getFormName() + source.get(LogFormatEnum.URI.getFormName()) +
-                LogFormatEnum.CLASS_NAME.getFormName() + source.get(LogFormatEnum.CLASS_NAME.getFormName()) +
-                LogFormatEnum.ARGS.getFormName() + source.get(LogFormatEnum.ARGS.getFormName()) +
-                LogFormatEnum.BODY.getFormName() + source.get(LogFormatEnum.BODY.getFormName()) +
-                LogFormatEnum.TIME.getFormName() + source.get(LogFormatEnum.TIME.getFormName()) +
-                LogFormatEnum.MS.getFormName()
+                    LogFormatEnum.START_TIME.getFormName() + source.get(LogFormatEnum.START_TIME.getFormName()) +
+                    LogFormatEnum.MODULE.getFormName() + source.get(LogFormatEnum.MODULE.getFormName()) +
+                    LogFormatEnum.METHOD.getFormName() + source.get(LogFormatEnum.METHOD.getFormName()) +
+                    LogFormatEnum.EXPLAIN.getFormName() + source.get(LogFormatEnum.EXPLAIN.getFormName()) +
+                    LogFormatEnum.URL.getFormName() + source.get(LogFormatEnum.URL.getFormName()) +
+                    LogFormatEnum.URI.getFormName() + source.get(LogFormatEnum.URI.getFormName()) +
+                    LogFormatEnum.CLASS_NAME.getFormName() + source.get(LogFormatEnum.CLASS_NAME.getFormName()) +
+                    LogFormatEnum.ARGS.getFormName() + source.get(LogFormatEnum.ARGS.getFormName()) +
+                    LogFormatEnum.BODY.getFormName() + source.get(LogFormatEnum.BODY.getFormName()) +
+                    LogFormatEnum.TIME.getFormName() + source.get(LogFormatEnum.TIME.getFormName()) +
+                    LogFormatEnum.MS.getFormName()
             );
         }
     }

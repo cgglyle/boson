@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 public enum LogFormatEnum {
     START("(业务日志)"),
+    START_TIME(" [开始时间]="),
     MODULE(" [module]="),
     METHOD( " [method]="),
     EXPLAIN(" [explain]="),
