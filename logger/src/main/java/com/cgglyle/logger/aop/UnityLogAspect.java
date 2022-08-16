@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -53,6 +54,8 @@ public class UnityLogAspect {
      */
     @Before(value = "unityLogCut()&&@annotation(unityLog)")
     public void unityLog(JoinPoint joinPoint, UnityLog unityLog) {
+        logContext.clear();
+        logContext.put(LogFormatEnum.START_TIME.getFormName(), LocalDateTime.now());
         joinContext(joinPoint, unityLog);
     }
 
@@ -98,7 +101,6 @@ public class UnityLogAspect {
         HttpServletRequest httpServletRequest = (HttpServletRequest) requestAttributes.
                 resolveReference(RequestAttributes.REFERENCE_REQUEST);
         assert httpServletRequest != null;
-        logContext.clear();
         logContext.put(LogFormatEnum.MODULE.getFormName(), unityLog.module());
         logContext.put(LogFormatEnum.METHOD.getFormName(), unityLog.method().getMethodName());
         logContext.put(LogFormatEnum.EXPLAIN.getFormName(), unityLog.explain());
