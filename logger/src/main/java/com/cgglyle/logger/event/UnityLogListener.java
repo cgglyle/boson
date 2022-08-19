@@ -25,6 +25,7 @@ public class UnityLogListener {
         Map<String, Object> source = (Map<String, Object>) event.getSource();
         if (source.containsKey(LogFormatEnum.EXCEPTION.getFormName())){
             log.error(LogFormatEnum.START.getFormName() + LogFormatEnum.EXCEPTION.getFormName() +
+                    LogFormatEnum.USER_ID.getFormName() + source.get(LogFormatEnum.USER_ID.getFormName()) +
                     LogFormatEnum.START_TIME.getFormName() + source.get(LogFormatEnum.START_TIME.getFormName()) +
                     LogFormatEnum.MODULE.getFormName() + source.get(LogFormatEnum.MODULE.getFormName()) +
                     LogFormatEnum.METHOD.getFormName() + source.get(LogFormatEnum.METHOD.getFormName()) +
@@ -38,6 +39,7 @@ public class UnityLogListener {
         }
         else {
             log.info(LogFormatEnum.START.getFormName() +
+                    LogFormatEnum.USER_ID.getFormName() + source.get(LogFormatEnum.USER_ID.getFormName()) +
                     LogFormatEnum.START_TIME.getFormName() + source.get(LogFormatEnum.START_TIME.getFormName()) +
                     LogFormatEnum.MODULE.getFormName() + source.get(LogFormatEnum.MODULE.getFormName()) +
                     LogFormatEnum.METHOD.getFormName() + source.get(LogFormatEnum.METHOD.getFormName()) +

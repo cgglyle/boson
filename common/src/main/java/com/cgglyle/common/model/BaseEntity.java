@@ -42,10 +42,6 @@ public abstract class BaseEntity implements Serializable {
     @TableField(value = "update_user_id", fill = FieldFill.INSERT_UPDATE)
     private Long updateUserId;
 
-    @Schema(description = "逻辑删除值('false'=>未删除，'ture'=>已删除)")
-    @TableField("is_deleted")
-    private Boolean isDeleted;
-
     @Schema(description = "状态值('false'=>正常，'ture'=>异常)")
     @TableField("is_status")
     private Boolean isStatus;

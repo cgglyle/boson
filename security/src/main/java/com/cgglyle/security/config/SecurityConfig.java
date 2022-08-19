@@ -1,19 +1,28 @@
 package com.cgglyle.security.config;
 
+import com.cgglyle.security.service.ILoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@EnableWebSecurity
+/**
+ * SpringSecurity 配置类
+ *
+ * @author lyle
+ * @since 2022/08/17
+ */
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final ILoginService loginService;
 
     @Bean
     public PasswordEncoder encoder(){
@@ -21,29 +30,24 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeRequests(authorize -> authorize
-                .antMatchers("/v3/api-docs/**").permitAll()
-                .antMatchers("/doc.html/**").permitAll()
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .anyRequest().authenticated()
-        ).httpBasic()
-                .and()
-                .rememberMe()
-                .key("admin")
-                .and()
-                .csrf().disable()
-                .build();
+    AuthenticationProvider provider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(loginService);
+        daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        return daoAuthenticationProvider;
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-        userDetailsManager.createUser(
-                User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build()
-        );
-        return userDetailsManager;
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.authorizeRequests(authorize -> authorize
+                        .antMatchers("/v3/api-docs/**").permitAll()
+                        .antMatchers("/doc.html/**").permitAll()
+                        .antMatchers("/swagger-ui/**").permitAll()
+                        .antMatchers("/webjars/**").permitAll()
+                        .anyRequest().authenticated()
+                ).httpBasic()
+                .and()
+                .csrf().disable()
+                .build();
     }
 }

@@ -3,7 +3,11 @@ package com.cgglyle.security.controller;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
 import com.cgglyle.security.model.entity.UserEntity;
+import com.cgglyle.security.model.entity.UserPasswdEntity;
+import com.cgglyle.security.query.UserPasswdSaveQuery;
+import com.cgglyle.security.query.UserPasswdUpdateQuery;
 import com.cgglyle.security.query.UserSaveQuery;
+import com.cgglyle.security.service.IUserPasswdService;
 import com.cgglyle.security.service.IUserService;
 import com.cgglyle.security.vo.UserVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,8 +35,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final IUserService IUserService;
-
+    private final IUserPasswdService userPasswdService;
     private static final String SECURITY_USER = "安全-用户模块";
+    private static final String SECURITY_USER_PASSWD = "安全-用户密码模块";
 
     @UnityLog(module = SECURITY_USER, method = LogMethodEnum.SEARCH, explain = "查找用户")
     @Operation(summary = "查看用户")
@@ -73,5 +78,23 @@ public class UserController {
     @GetMapping("/users/counts")
     public long count() {
         return IUserService.count();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = SECURITY_USER_PASSWD, method = LogMethodEnum.SAVE, explain = "添加密码")
+    @Operation(summary = "添加密码")
+    @PostMapping("/passwd")
+    public boolean save(@RequestBody @Valid UserPasswdSaveQuery query, BindingResult bindingResult) {
+        UserPasswdEntity entity = new UserPasswdEntity();
+        BeanUtils.copyProperties(query, entity);
+        return userPasswdService.save(entity);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UnityLog(module = SECURITY_USER_PASSWD, method = LogMethodEnum.UPDATE, explain = "更改密码")
+    @Operation(summary = "更改密码")
+    @PutMapping("/passwd")
+    public void save(@RequestBody @Valid UserPasswdUpdateQuery query, BindingResult bindingResult) {
+        userPasswdService.update(query);
     }
 }

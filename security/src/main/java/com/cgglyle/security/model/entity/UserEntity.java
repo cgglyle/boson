@@ -1,7 +1,7 @@
 package com.cgglyle.security.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cgglyle.common.model.BaseEntity;
+import com.cgglyle.common.model.IsDeletedEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_user_info")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends IsDeletedEntity {
     @NotEmpty(message = "名字不能为空")
     private String nickname;
     @NotEmpty(message = "邮箱不能为空")

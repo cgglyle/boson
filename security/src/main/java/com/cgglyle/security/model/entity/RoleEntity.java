@@ -1,7 +1,7 @@
 package com.cgglyle.security.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cgglyle.common.model.BaseEntity;
+import com.cgglyle.common.model.IsDeletedEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_role_info")
-public class RoleEntity extends BaseEntity {
+public class RoleEntity extends IsDeletedEntity {
     @NotEmpty(message = "角色代码不能为空")
     @Schema(description = "角色代码")
     private String roleCode;

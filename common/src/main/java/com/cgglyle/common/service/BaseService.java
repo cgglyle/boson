@@ -1,5 +1,6 @@
 package com.cgglyle.common.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
@@ -26,7 +27,7 @@ public interface BaseService<T> extends IService<T> {
      * @param entity 实体
      * @return <code>true</code>成功<br><code>false</code>失败
      */
-    boolean update(T entity);
+    boolean updateById(T entity);
 
     /**
      * 根据ID删除一条数据

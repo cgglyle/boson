@@ -1,5 +1,6 @@
 package com.cgglyle.logger.aop;
 
+import com.cgglyle.common.model.UserInfo;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogFormatEnum;
 import com.cgglyle.logger.event.UnityLogEvent;
@@ -9,6 +10,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.context.request.RequestAttributes;
@@ -54,8 +56,11 @@ public class UnityLogAspect {
      */
     @Before(value = "unityLogCut()&&@annotation(unityLog)")
     public void unityLog(JoinPoint joinPoint, UnityLog unityLog) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserInfo userInfo = (UserInfo) principal;
         logContext.clear();
         logContext.put(LogFormatEnum.START_TIME.getFormName(), LocalDateTime.now());
+        logContext.put(LogFormatEnum.USER_ID.getFormName(), userInfo.getUserId());
         joinContext(joinPoint, unityLog);
     }
 
@@ -113,6 +118,5 @@ public class UnityLogAspect {
         List<Object> list = new ArrayList<>(objects);
         list.removeIf(m->m.getClass().equals(BeanPropertyBindingResult.class));
         logContext.put(LogFormatEnum.ARGS.getFormName(), Arrays.toString(list.toArray()));
-        //TODO: 添加请求用户ID
     }
 }

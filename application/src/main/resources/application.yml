@@ -10,3 +10,4 @@ spring:
       - db
       - doc
       - mybatis
+      - dev
