@@ -12,7 +12,9 @@ public enum ResultCode implements StatusCode {
     /**
      * 一切OK
      */
-    SUCCESS("00000", "请求成功");
+    SUCCESS("00000", "请求成功"),
+    LOGIN_SUCCESS("00000", "登录成功"),
+    LOGOUT_SUCCESS("00000", "注销成功");
 
     private final String code;
     private final String msg;

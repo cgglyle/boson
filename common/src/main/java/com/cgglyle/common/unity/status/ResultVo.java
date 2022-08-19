@@ -40,6 +40,11 @@ public class ResultVo<T> {
         this.data = data;
     }
 
+    /**
+     * 返回指定状态码，指定原因
+     * @param statusCode 状态码
+     * @param cause 原因
+     */
     private ResultVo(StatusCode statusCode, String cause) {
         this.code = statusCode.getCode();
         this.msg = cause;
@@ -64,6 +69,30 @@ public class ResultVo<T> {
      */
     public static <T> ResultVo<T> success(T data){
         return new ResultVo<>(data);
+    }
+
+    /**
+     * 成功
+     * 不带数据
+     *
+     * @param code 成功状态值
+     * @return 返回体
+     * @param <T> 返回体类型
+     */
+    public static <T> ResultVo<T> success(StatusCode code){
+        return new ResultVo<>(code);
+    }
+
+    /**
+     * 成功
+     *
+     * @param code 成功状态值
+     * @param data 数据
+     * @return 返回体
+     * @param <T> 返回体类型
+     */
+    public static <T> ResultVo<T> success(StatusCode code, T data){
+        return new ResultVo<>(code, data);
     }
 
     /**

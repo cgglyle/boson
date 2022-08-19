@@ -1,5 +1,9 @@
 package com.cgglyle.security.config;
 
+import com.cgglyle.security.handler.LoginEntryPointHandler;
+import com.cgglyle.security.handler.LoginFailureHandler;
+import com.cgglyle.security.handler.LoginSuccessHandler;
+import com.cgglyle.security.handler.LogoutHandler;
 import com.cgglyle.security.service.ILoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +27,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final ILoginService loginService;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailureHandler loginFailureHandler;
+    private final LoginEntryPointHandler loginEntryPointHandler;
+    private final LogoutHandler logoutHandler;
 
     @Bean
     public PasswordEncoder encoder(){
@@ -45,9 +53,22 @@ public class SecurityConfig {
                         .antMatchers("/swagger-ui/**").permitAll()
                         .antMatchers("/webjars/**").permitAll()
                         .anyRequest().authenticated()
-                ).httpBasic()
-                .and()
+                )
                 .csrf().disable()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
+                .and()
+                .logout()
+                .permitAll()
+                .logoutSuccessHandler(logoutHandler)
+                .deleteCookies("JSESSIONID")
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(loginEntryPointHandler)
+                .and()
                 .build();
     }
 }

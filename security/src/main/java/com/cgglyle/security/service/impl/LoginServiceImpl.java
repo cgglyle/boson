@@ -44,7 +44,7 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity entity = userService.getByUserName(username);
-        if (entity.getId() == null){
+        if (entity == null || entity.getId() == null){
             throw new UsernameNotFoundException(ClientErrorCode.USERNAME_NOTFOUND.getMsg());
         }
         UserRoleRelationEntity userRoleRelationEntity = userRoleRelationService.getByUserId(entity.getId());
