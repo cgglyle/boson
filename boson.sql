@@ -105,7 +105,7 @@ CREATE TABLE `security_user_info` (
   UNIQUE KEY `per_user_info_nickname_uindex` (`nickname`),
   UNIQUE KEY `per_user_info_phone_uindex` (`phone`),
   KEY `idx_is_deleted` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,8 +114,41 @@ CREATE TABLE `security_user_info` (
 
 LOCK TABLES `security_user_info` WRITE;
 /*!40000 ALTER TABLE `security_user_info` DISABLE KEYS */;
-INSERT INTO `security_user_info` VALUES (1,'boson','boson@boson.com','11122223333','2022-08-12 11:35:21','2022-08-12 11:35:23',1,1,0,1,0),(2,'admin','admin@boson.com','21122223333','2022-08-12 11:35:48','2022-08-12 11:35:57',1,1,0,1,0),(3,'test','test@boson.com','31122223333','2022-08-12 11:36:17','2022-08-12 11:36:19',1,1,0,1,0),(4,'user','user@boson.com','41122223333','2022-08-12 11:36:41','2022-08-12 11:36:42',1,1,0,1,0),(5,'cgglyle','cgglyle@boson.com','51122223333','2022-08-12 11:37:05','2022-08-12 11:37:06',1,1,0,0,0),(7,'1','1@boson.com','1','2022-08-13 11:38:42','2022-08-13 11:38:42',1,1,0,0,0),(8,'2','2@boson.com','2','2022-08-13 13:37:37','2022-08-13 13:37:37',1,1,0,0,0),(9,'3','3@boson.com','3','2022-08-13 13:42:52','2022-08-13 13:42:52',1,1,0,0,0),(10,'4','4@boson.com','4','2022-08-13 15:30:33','2022-08-13 15:30:33',1,1,0,0,0),(11,'5','5@boson.com','5','2022-08-13 15:32:30','2022-08-13 15:32:30',1,1,0,0,0),(12,'6','6@boson.com','6','2022-08-13 15:33:25','2022-08-13 15:33:25',1,1,0,0,0),(14,'7','7@boson.com','7','2022-08-13 15:35:51','2022-08-13 15:35:51',1,1,0,0,0),(15,'8','8@boson.com','8','2022-08-13 15:36:41','2022-08-13 15:36:41',1,1,0,0,0),(16,'9','9@boson.com','9','2022-08-13 15:38:10','2022-08-13 15:38:10',1,1,0,0,0),(17,'10','10@boson.com','10','2022-08-13 15:38:49','2022-08-13 15:38:49',1,1,0,0,0),(18,'11','11@boson.com','11','2022-08-13 15:39:38','2022-08-13 15:39:38',1,1,0,0,0),(19,'12','12@boson.com','12','2022-08-13 15:46:26','2022-08-13 15:46:26',1,1,0,0,0),(20,'13','13@boson.com','13','2022-08-13 15:48:00','2022-08-13 15:48:00',1,1,0,0,0),(21,'14','14@boson.com','14','2022-08-13 15:50:46','2022-08-13 15:50:46',1,1,0,0,0),(22,'15','15@boson.com','15','2022-08-13 15:58:46','2022-08-13 15:58:46',1,1,0,0,0),(23,'16','16@boson.com','16','2022-08-13 16:04:37','2022-08-13 16:04:37',1,1,0,0,0),(24,'17','17@boson.com','17','2022-08-13 17:21:42','2022-08-14 15:23:53',1,1,0,0,1),(25,'18','18@boson.com','18','2022-08-13 23:25:21','2022-08-13 23:25:21',1,1,0,0,0),(26,'19','19@boson.com','19','2022-08-14 15:15:47','2022-08-14 15:15:47',1,1,0,0,0);
+INSERT INTO `security_user_info` VALUES (1,'boson','boson@boson.com','11122223333','2022-08-12 11:35:21','2022-08-12 11:35:23',1,1,0,1,0),(2,'admin','admin@boson.com','21122223333','2022-08-12 11:35:48','2022-08-12 11:35:57',1,1,0,1,0),(3,'test','test@boson.com','31122223333','2022-08-12 11:36:17','2022-08-12 11:36:19',1,1,0,1,0),(4,'user','user@boson.com','41122223333','2022-08-12 11:36:41','2022-08-12 11:36:42',1,1,0,1,0),(5,'cgglyle','cgglyle@boson.com','51122223333','2022-08-12 11:37:05','2022-08-12 11:37:06',1,1,0,0,0),(7,'1','1@boson.com','1','2022-08-13 11:38:42','2022-08-13 11:38:42',1,1,0,0,0),(8,'2','2@boson.com','2','2022-08-13 13:37:37','2022-08-13 13:37:37',1,1,0,0,0),(9,'3','3@boson.com','3','2022-08-13 13:42:52','2022-08-13 13:42:52',1,1,0,0,0),(10,'4','4@boson.com','4','2022-08-13 15:30:33','2022-08-13 15:30:33',1,1,0,0,0),(11,'5','5@boson.com','5','2022-08-13 15:32:30','2022-08-13 15:32:30',1,1,0,0,0),(12,'6','6@boson.com','6','2022-08-13 15:33:25','2022-08-13 15:33:25',1,1,0,0,0),(14,'7','7@boson.com','7','2022-08-13 15:35:51','2022-08-13 15:35:51',1,1,0,0,0),(15,'8','8@boson.com','8','2022-08-13 15:36:41','2022-08-13 15:36:41',1,1,0,0,0),(16,'9','9@boson.com','9','2022-08-13 15:38:10','2022-08-13 15:38:10',1,1,0,0,0),(17,'10','10@boson.com','10','2022-08-13 15:38:49','2022-08-13 15:38:49',1,1,0,0,0),(18,'11','11@boson.com','11','2022-08-13 15:39:38','2022-08-13 15:39:38',1,1,0,0,0),(19,'12','12@boson.com','12','2022-08-13 15:46:26','2022-08-13 15:46:26',1,1,0,0,0),(20,'13','13@boson.com','13','2022-08-13 15:48:00','2022-08-13 15:48:00',1,1,0,0,0),(21,'14','14@boson.com','14','2022-08-13 15:50:46','2022-08-13 15:50:46',1,1,0,0,0),(22,'15','15@boson.com','15','2022-08-13 15:58:46','2022-08-13 15:58:46',1,1,0,0,0),(23,'16','16@boson.com','16','2022-08-13 16:04:37','2022-08-13 16:04:37',1,1,0,0,0),(24,'17','17@boson.com','17','2022-08-13 17:21:42','2022-08-14 15:23:53',1,1,0,0,1),(25,'18','18@boson.com','18','2022-08-13 23:25:21','2022-08-13 23:25:21',1,1,0,0,0),(26,'19','19@boson.com','19','2022-08-14 15:15:47','2022-08-14 15:15:47',1,1,0,0,0),(27,'20','20@boson.com','20','2022-08-19 10:17:15','2022-08-19 10:17:15',1,1,0,0,0),(28,'21','21@boson.com','21','2022-08-19 10:20:09','2022-08-19 10:20:09',2,2,0,0,0);
 /*!40000 ALTER TABLE `security_user_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `security_user_passwd`
+--
+
+DROP TABLE IF EXISTS `security_user_passwd`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `security_user_passwd` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL COMMENT '用户信息id',
+  `user_passwd` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `create_user_id` bigint unsigned NOT NULL,
+  `update_user_id` bigint unsigned NOT NULL,
+  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+  `is_built_in` tinyint unsigned NOT NULL DEFAULT '0',
+  `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `security_user_passwd_user_info_id_uindex` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `security_user_passwd`
+--
+
+LOCK TABLES `security_user_passwd` WRITE;
+/*!40000 ALTER TABLE `security_user_passwd` DISABLE KEYS */;
+INSERT INTO `security_user_passwd` VALUES (1,1,'$2a$10$AHcZVKAX834.ZWjZoEl4Y.bCAriAFLao4CRsMOCmvrybFm/KmSsOy','2022-08-17 14:06:58','2022-08-19 11:33:04',1,2,0,0,0),(2,2,'$2a$10$uqf8oJPrGpbM5K/uWTxuUui.BA0aD1Sp.CxH.7zO35egC4Of/61NG','2022-08-19 10:19:28','2022-08-19 10:19:28',1,1,0,0,0);
+/*!40000 ALTER TABLE `security_user_passwd` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -146,7 +179,7 @@ CREATE TABLE `security_user_role_relation` (
 
 LOCK TABLES `security_user_role_relation` WRITE;
 /*!40000 ALTER TABLE `security_user_role_relation` DISABLE KEYS */;
-INSERT INTO `security_user_role_relation` VALUES (1,1,1,'2022-08-14 00:00:47','2022-08-14 00:00:47',1,1,0,0,0),(2,1,2,'2022-08-14 00:00:52','2022-08-14 00:00:52',1,1,0,0,0),(3,1,3,'2022-08-14 00:00:55','2022-08-14 00:00:55',1,1,0,0,0),(4,1,4,'2022-08-14 00:01:01','2022-08-14 00:01:01',1,1,0,0,0),(5,2,2,'2022-08-14 00:02:20','2022-08-14 00:02:20',1,1,0,0,0),(6,2,3,'2022-08-14 00:02:28','2022-08-14 00:02:28',1,1,0,0,0),(7,2,4,'2022-08-14 00:02:31','2022-08-14 00:02:31',1,1,0,0,0),(8,3,3,'2022-08-14 00:02:36','2022-08-14 00:02:36',1,1,0,0,0),(9,3,4,'2022-08-14 00:02:41','2022-08-14 00:02:41',1,1,0,0,0),(10,4,4,'2022-08-14 00:02:45','2022-08-14 00:02:45',1,1,0,0,0);
+INSERT INTO `security_user_role_relation` VALUES (1,1,1,'2022-08-14 00:00:47','2022-08-14 00:00:47',1,1,0,0,0),(2,2,2,'2022-08-14 00:00:52','2022-08-14 00:00:52',1,1,0,0,0),(3,3,3,'2022-08-14 00:00:55','2022-08-14 00:00:55',1,1,0,0,0),(4,4,4,'2022-08-14 00:01:01','2022-08-14 00:01:01',1,1,0,0,0);
 /*!40000 ALTER TABLE `security_user_role_relation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -159,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-15 15:53:10
+-- Dump completed on 2022-08-19 15:44:06
