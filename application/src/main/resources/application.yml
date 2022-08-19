@@ -8,3 +8,6 @@ spring:
     active: dev
     include:
       - db
+      - doc
+      - mybatis
+      - dev
