@@ -47,7 +47,11 @@ public enum LogFormatEnum {
     /**
      * [操作者ID]=
      */
-    USER_ID(" [操作者ID]=")
+    USER_ID(" [操作者ID]="),
+    USER_NAME(" [用户名字]="),
+    OPERATION_TIME( " [操作时间]="),
+    IP(" [IP]="),
+    ERROR(" [错误]=")
     ;
     private final String formName;
 

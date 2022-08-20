@@ -56,7 +56,14 @@ public class LoginServiceImpl implements ILoginService {
         userInfo.setRoleId(userRoleRelationEntity.getRoleId());
         userInfo.setAccountNonLocked(!entity.getIsStatus());
         userInfo.setEnabled(!entity.getIsStatus());
-        userInfo.setCredentialsNonExpired(!userPasswdEntity.getIsStatus());
+        if (entity.getExpiredTime().equals(-1L) ||
+                entity.getExpiredTime() > System.currentTimeMillis()){
+            userInfo.setAccountNonExpired(true);
+        }
+        if (userPasswdEntity.getExpiredTime().equals(-1L) ||
+                userPasswdEntity.getExpiredTime() > System.currentTimeMillis()){
+            userInfo.setCredentialsNonExpired(true);
+        }
         return userInfo;
     }
 }

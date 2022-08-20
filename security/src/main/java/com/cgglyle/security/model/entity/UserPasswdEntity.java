@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+
 /**
  * <p>
  * 
@@ -21,6 +23,7 @@ import lombok.Setter;
 @Schema(name = "UserPasswdEntity", description = "$!{table.comment}")
 public class UserPasswdEntity extends IsDeletedEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户信息id")
@@ -30,4 +33,5 @@ public class UserPasswdEntity extends IsDeletedEntity {
     @Schema(description = "用户密码")
     @TableField("user_passwd")
     private String userPasswd;
+    private Long expiredTime;
 }

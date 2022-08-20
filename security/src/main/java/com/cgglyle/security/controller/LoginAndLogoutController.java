@@ -1,13 +1,11 @@
 package com.cgglyle.security.controller;
 
+import com.cgglyle.security.query.LoginQuery;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lyle
@@ -21,11 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/")
 @RequiredArgsConstructor
 public class LoginAndLogoutController {
-    private static final String LOGIN = "登录模块";
     @PostMapping("/login")
-    public void login(String username, String password){
-    }
+    public void login(@RequestBody LoginQuery query){}
 
     @PostMapping("/logout")
-    public void logout(){};
+    public void logout(){}
 }

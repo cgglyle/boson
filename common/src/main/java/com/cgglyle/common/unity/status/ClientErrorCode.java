@@ -23,7 +23,11 @@ public enum ClientErrorCode implements StatusCode {
      * 数据校验错误
      */
     DATA_ERROR("C0020", "数据错误"),
-    DISABLED("C0030", "被禁用");
+    DISABLED("C0030", "被禁用"),
+    ACCOUNT_EXPIRED("C0014","帐号已过期"),
+    PASSWORD_EXPIRED("C0015", "密码已过期"),
+    ACCOUNT_LOCKED("C0016", "帐号被锁定"),
+    ;
     private final String code;
     private final String msg;
 

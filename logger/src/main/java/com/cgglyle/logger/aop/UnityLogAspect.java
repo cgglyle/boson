@@ -10,7 +10,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.context.request.RequestAttributes;
@@ -56,11 +58,14 @@ public class UnityLogAspect {
      */
     @Before(value = "unityLogCut()&&@annotation(unityLog)")
     public void unityLog(JoinPoint joinPoint, UnityLog unityLog) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
         UserInfo userInfo = (UserInfo) principal;
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
         logContext.clear();
         logContext.put(LogFormatEnum.START_TIME.getFormName(), LocalDateTime.now());
         logContext.put(LogFormatEnum.USER_ID.getFormName(), userInfo.getUserId());
+        logContext.put(LogFormatEnum.IP.getFormName(), details.getRemoteAddress());
         joinContext(joinPoint, unityLog);
     }
 

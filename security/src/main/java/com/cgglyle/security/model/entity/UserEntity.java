@@ -2,6 +2,7 @@ package com.cgglyle.security.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cgglyle.common.model.IsDeletedEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,4 +21,6 @@ public class UserEntity extends IsDeletedEntity {
     private String email;
     @NotEmpty(message = "电话不能为空")
     private String phone;
+    @Schema(description = "过期时间")
+    private Long expiredTime;
 }

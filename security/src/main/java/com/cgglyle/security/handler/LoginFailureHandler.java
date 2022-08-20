@@ -4,7 +4,7 @@ import com.cgglyle.common.unity.status.ClientErrorCode;
 import com.cgglyle.common.unity.status.ResultVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -35,12 +35,20 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResultVo<Object> resultVo = null;
+        ResultVo<Object> resultVo;
         if (exception instanceof UsernameNotFoundException){
             resultVo = ResultVo.error(ClientErrorCode.USERNAME_NOTFOUND);
         }else if (exception instanceof BadCredentialsException){
             resultVo = ResultVo.error(ClientErrorCode.USERNAME_PASSWORD_ERROR);
-        }else {
+        }else if (exception instanceof LockedException){
+            resultVo = ResultVo.error(ClientErrorCode.ACCOUNT_LOCKED);
+        }else if (exception instanceof AccountExpiredException){
+            resultVo = ResultVo.error(ClientErrorCode.ACCOUNT_EXPIRED);
+        }else if (exception instanceof DisabledException){
+            resultVo = ResultVo.error(ClientErrorCode.DISABLED);
+        } else if (exception instanceof CredentialsExpiredException) {
+            resultVo = ResultVo.error(ClientErrorCode.PASSWORD_EXPIRED);
+        } else {
             String message = exception.getMessage();
             resultVo = ResultVo.error(ClientErrorCode.CLIENT_ERROR,message);
         }

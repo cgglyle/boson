@@ -31,6 +31,10 @@ public class UserInfo implements UserDetails {
      * 帐号是否禁用，未禁用ture，禁用为false
      */
     private boolean isEnabled;
+    /**
+     * 帐号是否过期，为过期ture，过期false
+     */
+    private boolean isAccountNonExpired;
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.
@@ -42,17 +46,5 @@ public class UserInfo implements UserDetails {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(roleId.toString()));
         return authorities;
-    }
-
-    /**
-     * Indicates whether the user's account has expired. An expired account cannot be
-     * authenticated.
-     *
-     * @return <code>true</code> if the user's account is valid (ie non-expired),
-     * <code>false</code> if no longer valid (ie expired)
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
     }
 }
