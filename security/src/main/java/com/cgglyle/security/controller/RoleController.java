@@ -28,7 +28,7 @@ import java.util.List;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/admin")
 @RequiredArgsConstructor
 public class RoleController {
 

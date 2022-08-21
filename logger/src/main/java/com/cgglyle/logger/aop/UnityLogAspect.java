@@ -60,11 +60,15 @@ public class UnityLogAspect {
     public void unityLog(JoinPoint joinPoint, UnityLog unityLog) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
-        UserInfo userInfo = (UserInfo) principal;
         WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
         logContext.clear();
+        if ("anonymousUser".equals(principal)){
+            logContext.put(LogFormatEnum.USER_ID.getFormName(), "anonymousUser");
+        } else {
+            UserInfo userInfo = (UserInfo) principal;
+            logContext.put(LogFormatEnum.USER_ID.getFormName(), userInfo.getUserId());
+        }
         logContext.put(LogFormatEnum.START_TIME.getFormName(), LocalDateTime.now());
-        logContext.put(LogFormatEnum.USER_ID.getFormName(), userInfo.getUserId());
         logContext.put(LogFormatEnum.IP.getFormName(), details.getRemoteAddress());
         joinContext(joinPoint, unityLog);
     }

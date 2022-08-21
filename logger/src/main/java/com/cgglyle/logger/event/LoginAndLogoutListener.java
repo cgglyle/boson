@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * 登录登出日志监听器
  *
@@ -81,6 +83,20 @@ public class LoginAndLogoutListener {
                 LogFormatEnum.IP.getFormName() + details.getRemoteAddress() +
                 LogFormatEnum.USER_ID.getFormName() + userInfo.getUserId() +
                 LogFormatEnum.USER_NAME.getFormName() + userInfo.getUsername() +
+                LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
+    }
+
+    @Async
+    @Order
+    @EventListener(AccessDeniedEvent.class)
+    public void printLog(AccessDeniedEvent event) {
+        Map<String, Object> source = (Map<String, Object>) event.getSource();
+        log.info("(无权限日志)" +
+                LogFormatEnum.IP.getFormName() + source.get(LogFormatEnum.IP.getFormName()) +
+                LogFormatEnum.USER_NAME.getFormName() + source.get(LogFormatEnum.USER_NAME.getFormName()) +
+                " [请求方式]=" + source.get(" [请求方式]=") +
+                LogFormatEnum.URI.getFormName() + source.get(LogFormatEnum.URI.getFormName()) +
+                LogFormatEnum.ERROR.getFormName() + ClientErrorCode.FORBIDDEN.getMsg() +
                 LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
     }
 }

@@ -1,11 +1,9 @@
 package com.cgglyle.security.config;
 
-import com.cgglyle.security.filter.LoginFilter;
-import com.cgglyle.security.handler.LoginEntryPointHandler;
-import com.cgglyle.security.handler.LoginFailureHandler;
-import com.cgglyle.security.handler.LoginSuccessHandler;
-import com.cgglyle.security.handler.LogoutHandler;
+import com.cgglyle.security.filter.LoginFilters;
+import com.cgglyle.security.handler.*;
 import com.cgglyle.security.service.ILoginService;
+import com.cgglyle.security.service.impl.DynamicPermissionAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,12 +28,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final ILoginService loginService;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailureHandler loginFailureHandler;
     private final LoginEntryPointHandler loginEntryPointHandler;
+    private final LoginAccessDeniedHandler loginAccessDeniedHandler;
     private final LogoutHandler logoutHandler;
+    private final DynamicPermissionAuthentication dynamicPermissionAuthentication;
 
     /**
      * 加密模式
@@ -48,16 +50,16 @@ public class SecurityConfig {
      * 自定义登录拦截器
      */
     @Bean
-    public LoginFilter loginFilter(HttpSecurity httpSecurity) throws Exception {
-        LoginFilter loginFilter = new LoginFilter();
+    public LoginFilters loginFilter(HttpSecurity httpSecurity) throws Exception {
+        LoginFilters loginFilters = new LoginFilters();
         // 登录成功处理器
-        loginFilter.setAuthenticationSuccessHandler(loginSuccessHandler);
+        loginFilters.setAuthenticationSuccessHandler(loginSuccessHandler);
         // 登录失败处理器
-        loginFilter.setAuthenticationFailureHandler(loginFailureHandler);
+        loginFilters.setAuthenticationFailureHandler(loginFailureHandler);
         // 注入认证管理器 SpringSecurity 5.7 方式（可能有待改进）
-        loginFilter.setAuthenticationManager(authenticationManagerBean(httpSecurity.getSharedObject(AuthenticationConfiguration.class)));
-        loginFilter.setFilterProcessesUrl("/login");
-        return loginFilter;
+        loginFilters.setAuthenticationManager(authenticationManagerBean(httpSecurity.getSharedObject(AuthenticationConfiguration.class)));
+        loginFilters.setFilterProcessesUrl("/login");
+        return loginFilters;
     }
 
     /**
@@ -85,12 +87,14 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeRequests(authorize -> authorize
+        return httpSecurity.authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/v3/api-docs/**").permitAll()
                         .antMatchers("/doc.html/**").permitAll()
                         .antMatchers("/swagger-ui/**").permitAll()
                         .antMatchers("/webjars/**").permitAll()
-                        .anyRequest().authenticated()
+                        .antMatchers("/null/cp/error").permitAll()
+                        .anyRequest()
+                        .access(dynamicPermissionAuthentication)
                 )
                 .addFilterAt(loginFilter(httpSecurity), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
@@ -107,6 +111,7 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(loginEntryPointHandler)
+                .accessDeniedHandler(loginAccessDeniedHandler)
                 .and()
                 .build();
     }

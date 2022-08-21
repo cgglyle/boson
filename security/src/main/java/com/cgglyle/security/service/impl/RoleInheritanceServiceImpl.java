@@ -33,7 +33,7 @@ public class RoleInheritanceServiceImpl extends BaseServiceImpl<RoleInheritanceM
      * @return 成功 失败
      */
     @Override
-    public Map<Long, List<Long>> pushRoleInheritanceToRedis() {
+    public Map<Long, List<Long>> putRoleInheritanceToMap() {
         QueryWrapper<RoleInheritanceEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("id", "role_id", "role_parent_id");
         List<RoleInheritanceEntity> list = super.list(queryWrapper);

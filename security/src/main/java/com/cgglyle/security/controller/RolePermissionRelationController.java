@@ -1,0 +1,85 @@
+package com.cgglyle.security.controller;
+
+import com.cgglyle.logger.annotaion.UnityLog;
+import com.cgglyle.logger.enums.LogMethodEnum;
+import com.cgglyle.security.model.entity.RolePermissionRelationEntity;
+import com.cgglyle.security.query.RolePermissionRelationSaveQuery;
+import com.cgglyle.security.service.IRolePermissionRelationService;
+import com.cgglyle.security.vo.RoleInheritanceVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+/**
+ * <p>
+ * 角色权限关联表 前端控制器
+ * </p>
+ *
+ * @author lyle
+ * @since 2022-08-21
+ */
+@Tag(name = "RolePermissionRelationController", description = "角色权限控制器")
+@Slf4j
+@Validated
+@CrossOrigin
+@RestController
+@RequestMapping(value = "/admin/role/")
+@RequiredArgsConstructor
+public class RolePermissionRelationController {
+
+    private final IRolePermissionRelationService rolePermissionRelationService;
+    private static final String MODULE = "安全-角色权限关联";
+
+
+    @UnityLog(module = MODULE, method = LogMethodEnum.SEARCH, explain = "查看全部角色权限关联")
+    @Operation(summary = "查看全部角色权限关联")
+    @GetMapping("/permission")
+    public List<RolePermissionRelationEntity> list() {
+        return rolePermissionRelationService.list();
+    }
+
+    @UnityLog(module = MODULE, method = LogMethodEnum.SEARCH, explain = "根据ID查找角色权限关联")
+    @Operation(summary = "根据ID查找角色权限关联")
+    @GetMapping("/permission/{id}")
+    public RoleInheritanceVo getById(@PathVariable(value = "id") Long id){
+        RoleInheritanceVo roleInheritanceVo = new RoleInheritanceVo();
+        BeanUtils.copyProperties(rolePermissionRelationService.getById(id),roleInheritanceVo);
+        return roleInheritanceVo;
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = MODULE, method = LogMethodEnum.SAVE, explain = "添加角色权限关联")
+    @Operation(summary = "添加角色权限关联")
+    @PostMapping("/permission")
+    public boolean save(@RequestBody @Valid RolePermissionRelationSaveQuery query, BindingResult bindingResult) {
+        RolePermissionRelationEntity rolePermissionRelationEntity = new RolePermissionRelationEntity();
+        BeanUtils.copyProperties(query, rolePermissionRelationEntity);
+        return rolePermissionRelationService.save(rolePermissionRelationEntity);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UnityLog(module = MODULE, method = LogMethodEnum.DELETED, explain = "删除角色权限关联")
+    @Operation(summary = "删除角色权限关联")
+    @DeleteMapping("/permission")
+    public void remove(Long id) {
+        rolePermissionRelationService.removeById(id);
+    }
+
+    @UnityLog(module = MODULE, method = LogMethodEnum.SEARCH, explain = "查询总数")
+    @Operation(summary = "查询总数")
+    @GetMapping("/permission/counts")
+    public long count() {
+        return rolePermissionRelationService.count();
+    }
+
+
+}

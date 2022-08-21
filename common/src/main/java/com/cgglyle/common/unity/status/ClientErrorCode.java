@@ -27,6 +27,7 @@ public enum ClientErrorCode implements StatusCode {
     ACCOUNT_EXPIRED("C0014","帐号已过期"),
     PASSWORD_EXPIRED("C0015", "密码已过期"),
     ACCOUNT_LOCKED("C0016", "帐号被锁定"),
+    FORBIDDEN("C0017", "无权限")
     ;
     private final String code;
     private final String msg;

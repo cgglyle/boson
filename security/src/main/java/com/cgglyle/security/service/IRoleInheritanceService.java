@@ -20,6 +20,6 @@ public interface IRoleInheritanceService extends BaseService<RoleInheritanceEnti
      * 从数据库中提取角色继承关系，存入Map
      * @return 角色关系Map
      */
-    Map<Long, List<Long>> pushRoleInheritanceToRedis();
+    Map<Long, List<Long>> putRoleInheritanceToMap();
 
 }

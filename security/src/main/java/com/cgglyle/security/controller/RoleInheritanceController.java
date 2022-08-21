@@ -88,6 +88,6 @@ public class RoleInheritanceController {
     @Operation(summary = "将角色父关系存入MAP")
     @PostMapping("/inheritances/push-map")
     public Map<Long, List<Long>> pushRoleInheritanceToMap(){
-        return roleInheritanceService.pushRoleInheritanceToRedis();
+        return roleInheritanceService.putRoleInheritanceToMap();
     }
 }

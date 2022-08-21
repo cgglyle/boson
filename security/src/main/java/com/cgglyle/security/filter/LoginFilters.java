@@ -21,7 +21,7 @@ import java.util.Map;
  * @author lyle
  * @since 2022/08/19
  */
-public class LoginFilter extends UsernamePasswordAuthenticationFilter {
+public class LoginFilters extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         // 判断是否是POST请求，不是直接抛异常
