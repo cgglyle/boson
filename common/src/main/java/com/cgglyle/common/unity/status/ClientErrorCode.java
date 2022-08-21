@@ -12,6 +12,7 @@ public enum ClientErrorCode implements StatusCode {
      * 客户端错误
      */
     CLIENT_ERROR("C0001", "客户端错误"),
+    NOT_FOUNT("C0002","资源不存在"),
     LOGIN_REQUIRED("C0010","需要登录"),
     /**
      * 用户名或者密码错误
