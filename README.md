@@ -35,3 +35,7 @@
     </a>
     倾力 ❤︎ 打造</sub>
 </div>
+
+## 小提示
+当前项目只有后端，前端请前往[Fermion](https://github.com/cgglyle/fermion)。
+这是一个专门为Boson开发的前端项目，波色子费米子哥俩好。
