@@ -3,7 +3,7 @@ services:
   mysql:
     restart: always
     image: mysql
-    container_name: mysql-lable
+    container_name: mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - ~/boson/mysql/mydir:/mydir
@@ -23,6 +23,7 @@ services:
   mongo:
     image: mongo # 选择mongodb版本
     restart: always  # 自启动
+    container_name: mongo
     ports:
       - 27017:27017 # 映射宿主机端口
     volumes:
