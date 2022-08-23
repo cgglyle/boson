@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
@@ -78,16 +77,21 @@ public class DynamicPermissionAuthentication implements AuthorizationManager<Req
             return new AuthorizationDecision(false);
         }
         // 去permissionMap中搜索权限ID
-        AtomicReference<Long> permissionId = new AtomicReference<>();
-        permissionMap.forEach((k, v)->{
-            if (matcher.match(k, buffer.toString())){
-                permissionId.set(v);
+        Long permissionId = null;
+        for (Map.Entry<String, Long> entry : permissionMap.entrySet()){
+            if (matcher.match(entry.getKey(), buffer.toString())){
+                permissionId = entry.getValue();
             }
-        });
-        if (permissionId.get().equals(4L) || permissionId.get().equals(7L)){
+        }
+        // 如果没有找到PermissionId就是库中还没有设置权限，现阶段默认直接通过
+        // FIXME：因为现阶段没有全部导入所有地址，所以暂时设置为没有定义权限的接口默认都是匿名即可通过
+        if (permissionId == null){
             return new AuthorizationDecision(true);
         }
-        Long roleId = rolePermissionRelationService.getRoleIdByPermissionId(permissionId.get());
+        if (permissionId.equals(4L) || permissionId.equals(7L)){
+            return new AuthorizationDecision(true);
+        }
+        Long roleId = rolePermissionRelationService.getRoleIdByPermissionId(permissionId);
         List<Long> roleList = roleInheritanceMap.get(roleId);
         if (roleList.stream().anyMatch(id -> id.toString().equals(authority))){
             return new AuthorizationDecision(true);
