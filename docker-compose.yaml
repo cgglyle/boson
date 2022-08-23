@@ -41,3 +41,12 @@ services:
 #    volumes:
 #      - $PWD/data:/data
 #      - $PWD/conf/redis.conf:/etc/redis/redis.conf
+
+  boson:
+    image: cgglyle/boson:dev
+    container_name: boson
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - "LOG_NAME=/var/log/boson"
