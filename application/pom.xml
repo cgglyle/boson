@@ -5,7 +5,7 @@
     <parent>
         <artifactId>boson</artifactId>
         <groupId>com.cgglyle</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-alpha</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,16 +22,22 @@
         <dependency>
             <groupId>com.cgglyle</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${boson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cgglyle</groupId>
             <artifactId>security</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${boson.version}</version>
         </dependency>
     </dependencies>
 
 <build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>

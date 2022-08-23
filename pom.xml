@@ -19,13 +19,13 @@
 
     <groupId>com.cgglyle</groupId>
     <artifactId>boson</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-alpha</version>
     <name>boson</name>
     <description>boson</description>
 
     <properties>
         <java.version>18</java.version>
-        <boson.version>0.0.1-SNAPSHOT</boson.version>
+        <boson.version>0.0.1-alpha</boson.version>
     </properties>
 
     <dependencyManagement>
@@ -43,7 +43,12 @@
             <dependency>
                 <groupId>com.cgglyle</groupId>
                 <artifactId>security</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${boson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cgglyle</groupId>
+                <artifactId>logger</artifactId>
+                <version>${boson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

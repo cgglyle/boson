@@ -3,7 +3,7 @@ spring:
   datasource:
     # 驱动配置
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/boson?allowMultiQueries=true&useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=UTF-8
+    url: jdbc:mysql://mysql:3306/boson?allowMultiQueries=true&useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=UTF-8
     # 用户名
     username: root
     # 密码
@@ -18,13 +18,13 @@ spring:
 
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       database: boson
 
   redis:
     database: 0
-    host: localhost
+    host: redis
     port: 6379
     lettuce:
       pool:

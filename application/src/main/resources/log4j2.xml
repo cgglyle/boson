@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="OFF">
     <Properties>
-        <Property name="LOG_HOME">/home/lyle/IdeaProjects/boson/log</Property>
+        <Property name="LOG_HOME">${env:LOG_HOME}</Property>
         <!--<Property name="LOG_HOME">../logs</Property>-->
         <!--<Property name="PATTERN">[%date{DEFAULT}] [%thread] [%-5level] TC:%x %logger{1.}.%method:%line - %msg%xEx%n</Property>-->
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xEx</Property>
