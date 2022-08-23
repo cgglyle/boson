@@ -37,7 +37,6 @@
 </div>
 
 ### 快速开发环境
-
 在项目根目录执行`docker-compose up -d`来启动服务所需的数据库环境。  
 
 #### 注意
@@ -45,3 +44,7 @@
 `~/boson/mysql/source`目录中（如果没有需要自行创建`mkdir -p ~/boson/mysql/source`），在启动docker时，会自动将SQL语句执行，注入数据。
 
 在MacOS环境开发本项目时注意修改`application`中的`log4j2.xml`文件中的日志存放目录，以免出现无法创建日志的情况。
+
+## 小提示
+当前项目只有后端，前端请前往[Fermion](https://github.com/cgglyle/fermion)。
+这是一个专门为Boson开发的前端项目，波色子费米子哥俩好。
