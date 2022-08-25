@@ -22,7 +22,6 @@
         <dependency>
             <groupId>com.cgglyle</groupId>
             <artifactId>common</artifactId>
-            <version>${boson.version}</version>
         </dependency>
     </dependencies>
 

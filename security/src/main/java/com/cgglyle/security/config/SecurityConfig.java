@@ -2,8 +2,8 @@ package com.cgglyle.security.config;
 
 import com.cgglyle.security.filter.LoginFilters;
 import com.cgglyle.security.handler.*;
-import com.cgglyle.security.service.ILoginService;
-import com.cgglyle.security.service.impl.DynamicPermissionAuthentication;
+import com.cgglyle.security.service.ILoginUserDetailsService;
+import com.cgglyle.security.service.impl.DynamicAuthorization;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,13 +30,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    private final ILoginService loginService;
+    private final ILoginUserDetailsService loginUserDetailsService;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailureHandler loginFailureHandler;
     private final LoginEntryPointHandler loginEntryPointHandler;
     private final LoginAccessDeniedHandler loginAccessDeniedHandler;
     private final LogoutHandler logoutHandler;
-    private final DynamicPermissionAuthentication dynamicPermissionAuthentication;
+    private final DynamicAuthorization dynamicAuthorization;
 
     /**
      * 加密模式
@@ -79,7 +79,7 @@ public class SecurityConfig {
     AuthenticationProvider provider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         // 使用自定义身份验证器
-        daoAuthenticationProvider.setUserDetailsService(loginService);
+        daoAuthenticationProvider.setUserDetailsService(loginUserDetailsService);
         // 加密模式
         daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return daoAuthenticationProvider;
@@ -94,7 +94,7 @@ public class SecurityConfig {
                         .antMatchers("/webjars/**").permitAll()
                         .antMatchers("/null/cp/error").permitAll()
                         .anyRequest()
-                        .access(dynamicPermissionAuthentication)
+                        .access(dynamicAuthorization)
                 )
                 .addFilterAt(loginFilter(httpSecurity), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
