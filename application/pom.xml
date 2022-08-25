@@ -22,12 +22,14 @@
         <dependency>
             <groupId>com.cgglyle</groupId>
             <artifactId>common</artifactId>
-            <version>${boson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cgglyle</groupId>
             <artifactId>security</artifactId>
-            <version>${boson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cgglyle</groupId>
+            <artifactId>admin</artifactId>
         </dependency>
     </dependencies>
 

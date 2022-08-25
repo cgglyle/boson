@@ -8,6 +8,7 @@
         <module>security</module>
         <module>common</module>
         <module>logger</module>
+        <module>admin</module>
     </modules>
 
     <parent>
@@ -48,6 +49,11 @@
             <dependency>
                 <groupId>com.cgglyle</groupId>
                 <artifactId>logger</artifactId>
+                <version>${boson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cgglyle</groupId>
+                <artifactId>admin</artifactId>
                 <version>${boson.version}</version>
             </dependency>
         </dependencies>

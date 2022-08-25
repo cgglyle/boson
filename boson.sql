@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `security_config`
+--
+
+DROP TABLE IF EXISTS `security_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `security_config` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `config_key` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `config_value` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `create_user_id` bigint unsigned NOT NULL DEFAULT '1',
+  `update_user_id` bigint unsigned NOT NULL,
+  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key` (`config_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='安全配置';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `security_config`
+--
+
+LOCK TABLES `security_config` WRITE;
+/*!40000 ALTER TABLE `security_config` DISABLE KEYS */;
+INSERT INTO `security_config` VALUES (1,'isAnonymousUser','true','2022-08-25 14:24:30','2022-08-25 14:24:30',1,1,0);
+/*!40000 ALTER TABLE `security_config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `security_permission`
 --
 
@@ -24,8 +55,8 @@ DROP TABLE IF EXISTS `security_permission`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_permission` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `permission_url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口URL',
-  `permission_description` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口描述',
+  `permission_url` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口URL',
+  `permission_description` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口描述',
   `create_time` datetime NOT NULL,
   `update_time` datetime DEFAULT NULL,
   `create_user_id` bigint unsigned NOT NULL,
@@ -33,7 +64,7 @@ CREATE TABLE `security_permission` (
   `is_status` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `security_permission_permission_url_uindex` (`permission_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='接口权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='接口权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +73,7 @@ CREATE TABLE `security_permission` (
 
 LOCK TABLES `security_permission` WRITE;
 /*!40000 ALTER TABLE `security_permission` DISABLE KEYS */;
-INSERT INTO `security_permission` VALUES (1,'GET/users','查看用户','2022-08-21 00:43:45','2022-08-21 00:43:45',1,1,0),(2,'GET/users/{id}','根据ID查找用户','2022-08-21 00:45:12','2022-08-21 00:45:12',1,1,0),(3,'POST/users','添加用户','2022-08-21 00:45:31','2022-08-21 00:45:31',1,1,0),(4,'DELETE/users','删除用户','2022-08-21 00:45:56','2022-08-21 00:45:56',1,1,0),(5,'GET/users/counts','查询总数','2022-08-21 00:46:16','2022-08-21 00:46:16',1,1,0),(6,'POST/passwd','添加密码','2022-08-21 18:15:14','2022-08-21 18:15:15',1,1,0),(7,'null/cp/error','错误页面','2022-08-21 18:30:48','2022-08-21 18:30:50',1,1,0);
+INSERT INTO `security_permission` VALUES (1,'GET/users','查看用户','2022-08-21 00:43:45','2022-08-21 00:43:45',1,1,0),(2,'GET/users/{id}','根据ID查找用户','2022-08-21 00:45:12','2022-08-21 00:45:12',1,1,0),(3,'POST/users','添加用户','2022-08-21 00:45:31','2022-08-21 00:45:31',1,1,0),(4,'DELETE/users','删除用户','2022-08-21 00:45:56','2022-08-21 00:45:56',1,1,0),(5,'GET/users/counts','查询总数','2022-08-21 00:46:16','2022-08-21 00:46:16',1,1,0),(6,'POST/passwd','添加密码','2022-08-21 18:15:14','2022-08-21 18:15:15',1,1,0),(7,'null/cp/error','错误页面','2022-08-21 18:30:48','2022-08-21 18:30:50',1,1,0),(8,'GET/admin/permission','查看全部URL权限','2022-08-25 11:35:01','2022-08-25 11:35:01',4,4,0),(9,'GET/permission/{id}','根据ID查找URL权限','2022-08-25 11:42:04','2022-08-25 11:42:04',4,4,0);
 /*!40000 ALTER TABLE `security_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +128,7 @@ CREATE TABLE `security_role_inheritance` (
   `is_status` tinyint unsigned NOT NULL DEFAULT '0',
   `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色继承关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色继承关系表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +137,7 @@ CREATE TABLE `security_role_inheritance` (
 
 LOCK TABLES `security_role_inheritance` WRITE;
 /*!40000 ALTER TABLE `security_role_inheritance` DISABLE KEYS */;
-INSERT INTO `security_role_inheritance` VALUES (1,1,0,'2022-08-14 18:53:43','2022-08-14 18:53:45',1,1,0,0),(2,2,1,'2022-08-14 18:54:06','2022-08-14 18:54:07',1,1,0,0),(3,5,1,'2022-08-14 18:54:28','2022-08-14 18:54:29',1,1,0,0),(4,3,5,'2022-08-14 18:56:09','2022-08-14 18:56:12',1,1,0,0),(5,8,3,'2022-08-15 11:54:57','2022-08-15 11:54:57',1,1,0,0),(6,9,8,'2022-08-15 11:55:18','2022-08-15 11:55:18',1,1,0,0),(7,4,8,'2022-08-15 14:35:01','2022-08-15 14:35:01',1,1,0,0),(8,4,9,'2022-08-15 14:35:05','2022-08-15 14:35:05',1,1,0,0),(9,4,2,'2022-08-15 15:16:10','2022-08-15 15:16:10',1,1,0,0),(10,7,4,'2022-08-21 18:36:56','2022-08-21 18:36:57',1,1,0,0);
+INSERT INTO `security_role_inheritance` VALUES (1,1,0,'2022-08-14 18:53:43','2022-08-14 18:53:45',1,1,0,0),(2,2,1,'2022-08-14 18:54:06','2022-08-14 18:54:07',1,1,0,0),(3,5,1,'2022-08-14 18:54:28','2022-08-14 18:54:29',1,1,0,0),(4,3,5,'2022-08-14 18:56:09','2022-08-14 18:56:12',1,1,0,0),(9,4,2,'2022-08-15 15:16:10','2022-08-15 15:16:10',1,1,0,0),(10,7,4,'2022-08-21 18:36:56','2022-08-21 18:36:57',1,1,0,0),(11,4,3,'2022-08-21 18:36:56','2022-08-21 18:36:57',1,1,0,0);
 /*!40000 ALTER TABLE `security_role_inheritance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +159,7 @@ CREATE TABLE `security_role_permission_relation` (
   `is_status` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `security_role_permission_relation_permission_id_uindex` (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +168,7 @@ CREATE TABLE `security_role_permission_relation` (
 
 LOCK TABLES `security_role_permission_relation` WRITE;
 /*!40000 ALTER TABLE `security_role_permission_relation` DISABLE KEYS */;
-INSERT INTO `security_role_permission_relation` VALUES (1,2,1,'2022-08-21 09:35:14','2022-08-21 09:35:14',1,1,0),(2,2,2,'2022-08-21 09:35:28','2022-08-21 09:35:28',1,1,0),(3,2,3,'2022-08-21 09:35:45','2022-08-21 09:35:45',1,1,0),(4,2,4,'2022-08-21 09:35:47','2022-08-21 09:35:47',1,1,0),(5,4,5,'2022-08-21 09:35:54','2022-08-21 09:35:54',1,1,0),(6,2,6,'2022-08-21 18:17:35','2022-08-21 18:17:36',1,1,0),(7,7,7,'2022-08-21 18:32:10','2022-08-21 18:32:11',1,1,0);
+INSERT INTO `security_role_permission_relation` VALUES (1,2,1,'2022-08-21 09:35:14','2022-08-21 09:35:14',1,1,0),(2,2,2,'2022-08-21 09:35:28','2022-08-21 09:35:28',1,1,0),(3,2,3,'2022-08-21 09:35:45','2022-08-21 09:35:45',1,1,0),(4,2,4,'2022-08-21 09:35:47','2022-08-21 09:35:47',1,1,0),(5,4,5,'2022-08-21 09:35:54','2022-08-21 09:35:54',1,1,0),(6,2,6,'2022-08-21 18:17:35','2022-08-21 18:17:36',1,1,0),(7,7,7,'2022-08-21 18:32:10','2022-08-21 18:32:11',1,1,0),(8,7,8,'2022-08-25 11:38:52','2022-08-25 11:38:52',4,4,0);
 /*!40000 ALTER TABLE `security_role_permission_relation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +219,7 @@ DROP TABLE IF EXISTS `security_user_passwd`;
 CREATE TABLE `security_user_passwd` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL COMMENT '用户信息id',
-  `user_passwd` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
+  `user_passwd` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `create_user_id` bigint unsigned NOT NULL,
@@ -251,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-22 17:09:19
+-- Dump completed on 2022-08-25 18:00:22
