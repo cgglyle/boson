@@ -37,11 +37,7 @@
 </div>
 
 ### 快速开发环境 
-您只需要在源码库中下载`docker-compose.yaml`,`boson.sql`,`BosonStart.sh`三个文件。之后执行`BosonStart.sh`文件即可。
-
-#### 注意
-您需要注意在根目录中的`docker-compose.yml`文件中的配置。在项目跟目录中有`boson.sql`SQL文件，您需要将SQL文件移动至
-`~/boson/mysql/source`目录中（如果没有需要自行创建`mkdir -p ~/boson/mysql/source`），在启动docker时，会自动将SQL语句执行，注入数据。
+您只需要在源码库中下载`docker-compose.yaml`执行`docker-compose up -d`命令即可。
 
 #### Windows用户注意！
 启动脚本是为Linux系统设计的，如果您需要在Windows上启动项目，您需要更改一些配置。
@@ -63,8 +59,6 @@ mongo:
 您需要注意在Windows系统中不具备`~/xxx`目录，你需要手动更换挂载点地址。
 
 如：`- D:/boson/mysql/mydir:/mydir` 你只需要将`:`前的地址换成您的本机挂载点地址。
-
-特别的是，您需要将`boson.sql`文件移动至数据库还原目录，`- ~/boson/mysql/source:/docker-entrypoint-initdb.d`来初始化开发环境。
 
 **在您更改本地挂载点之后，您需要手动启动项目，使用`docker-compose up -d`命令启动项目。**
 

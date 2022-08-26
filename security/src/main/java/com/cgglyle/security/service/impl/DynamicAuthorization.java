@@ -3,6 +3,7 @@ package com.cgglyle.security.service.impl;
 import com.cgglyle.security.event.DynamicAuthorizationChangeEvent;
 import com.cgglyle.security.service.DynamicAuthorizationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
@@ -35,9 +35,9 @@ public class DynamicAuthorization implements AuthorizationManager<RequestAuthori
     private static Boolean isAnonymousUser;
     private static Map<String, List<Long>> permissionRoleMap;
 
-    // 初始化权限列表，仅初始化一次
-    @PostConstruct
-    private void initialization(){
+    // 监听初始化成功事件，仅初始化一次
+    @EventListener(ContextRefreshedEvent.class)
+    public void initialization(){
         permissionRoleMap = dynamicAuthorizationService.permissionList();
         isAnonymousUser = dynamicAuthorizationService.isAnonymousUser();
     }

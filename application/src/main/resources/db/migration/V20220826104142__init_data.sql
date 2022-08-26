@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `security_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_config` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `config_key` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `config_value` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT NULL,
-  `create_user_id` bigint unsigned NOT NULL DEFAULT '1',
-  `update_user_id` bigint unsigned NOT NULL,
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`config_key`)
+                                   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                   `config_key` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                   `config_value` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                   `create_time` datetime NOT NULL,
+                                   `update_time` datetime DEFAULT NULL,
+                                   `create_user_id` bigint unsigned NOT NULL DEFAULT '1',
+                                   `update_user_id` bigint unsigned NOT NULL,
+                                   `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                   PRIMARY KEY (`id`),
+                                   UNIQUE KEY `key` (`config_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='安全配置';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,16 +54,16 @@ DROP TABLE IF EXISTS `security_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_permission` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `permission_url` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口URL',
-  `permission_description` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口描述',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned DEFAULT NULL,
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_permission_permission_url_uindex` (`permission_url`)
+                                       `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                       `permission_url` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口URL',
+                                       `permission_description` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '接口描述',
+                                       `create_time` datetime NOT NULL,
+                                       `update_time` datetime DEFAULT NULL,
+                                       `create_user_id` bigint unsigned NOT NULL,
+                                       `update_user_id` bigint unsigned DEFAULT NULL,
+                                       `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                       PRIMARY KEY (`id`),
+                                       UNIQUE KEY `security_permission_permission_url_uindex` (`permission_url`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='接口权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,18 +85,18 @@ DROP TABLE IF EXISTS `security_role_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_role_info` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `role_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色名称\n英文代码',
-  `role_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色名称',
-  `role_description` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色描述',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned NOT NULL,
-  `is_status` tinyint NOT NULL DEFAULT '0',
-  `is_deleted` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_role_info_role_code_uindex` (`role_code`)
+                                      `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+                                      `role_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色名称\n英文代码',
+                                      `role_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色名称',
+                                      `role_description` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色描述',
+                                      `create_time` datetime NOT NULL,
+                                      `update_time` datetime NOT NULL,
+                                      `create_user_id` bigint unsigned NOT NULL,
+                                      `update_user_id` bigint unsigned NOT NULL,
+                                      `is_status` tinyint NOT NULL DEFAULT '0',
+                                      `is_deleted` tinyint NOT NULL DEFAULT '0',
+                                      PRIMARY KEY (`id`),
+                                      UNIQUE KEY `security_role_info_role_code_uindex` (`role_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限系统\n角色信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -118,16 +118,16 @@ DROP TABLE IF EXISTS `security_role_inheritance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_role_inheritance` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `role_id` int unsigned NOT NULL COMMENT '角色id',
-  `role_parent_id` int unsigned NOT NULL COMMENT '父角色ID',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned NOT NULL,
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+                                             `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                             `role_id` int unsigned NOT NULL COMMENT '角色id',
+                                             `role_parent_id` int unsigned NOT NULL COMMENT '父角色ID',
+                                             `create_time` datetime NOT NULL,
+                                             `update_time` datetime NOT NULL,
+                                             `create_user_id` bigint unsigned NOT NULL,
+                                             `update_user_id` bigint unsigned NOT NULL,
+                                             `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                             `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
+                                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色继承关系表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,16 +149,16 @@ DROP TABLE IF EXISTS `security_role_permission_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_role_permission_relation` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `role_id` bigint unsigned NOT NULL,
-  `permission_id` bigint unsigned NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint NOT NULL,
-  `update_user_id` bigint NOT NULL,
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_role_permission_relation_permission_id_uindex` (`permission_id`)
+                                                     `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                                     `role_id` bigint unsigned NOT NULL,
+                                                     `permission_id` bigint unsigned NOT NULL,
+                                                     `create_time` datetime NOT NULL,
+                                                     `update_time` datetime NOT NULL,
+                                                     `create_user_id` bigint NOT NULL,
+                                                     `update_user_id` bigint NOT NULL,
+                                                     `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                                     PRIMARY KEY (`id`),
+                                                     UNIQUE KEY `security_role_permission_relation_permission_id_uindex` (`permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -180,22 +180,22 @@ DROP TABLE IF EXISTS `security_user_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_user_info` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `nickname` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '别名',
-  `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮件',
-  `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '电话',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned NOT NULL,
-  `expired_time` bigint NOT NULL DEFAULT '-1' COMMENT '过期时间，时间戳类型\n-1 为永不过期',
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '状态\n0-正常\n1-异常',
-  `is_deleted` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '逻辑删除\n0-未删除\n1-已删除',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `per_user_info_email_uindex` (`email`),
-  UNIQUE KEY `per_user_info_nickname_uindex` (`nickname`),
-  UNIQUE KEY `per_user_info_phone_uindex` (`phone`),
-  KEY `idx_is_deleted` (`is_deleted`)
+                                      `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+                                      `nickname` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '别名',
+                                      `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮件',
+                                      `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '电话',
+                                      `create_time` datetime NOT NULL,
+                                      `update_time` datetime NOT NULL,
+                                      `create_user_id` bigint unsigned NOT NULL,
+                                      `update_user_id` bigint unsigned NOT NULL,
+                                      `expired_time` bigint NOT NULL DEFAULT '-1' COMMENT '过期时间，时间戳类型\n-1 为永不过期',
+                                      `is_status` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '状态\n0-正常\n1-异常',
+                                      `is_deleted` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '逻辑删除\n0-未删除\n1-已删除',
+                                      PRIMARY KEY (`id`),
+                                      UNIQUE KEY `per_user_info_email_uindex` (`email`),
+                                      UNIQUE KEY `per_user_info_nickname_uindex` (`nickname`),
+                                      UNIQUE KEY `per_user_info_phone_uindex` (`phone`),
+                                      KEY `idx_is_deleted` (`is_deleted`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -217,18 +217,18 @@ DROP TABLE IF EXISTS `security_user_passwd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_user_passwd` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint unsigned NOT NULL COMMENT '用户信息id',
-  `user_passwd` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned NOT NULL,
-  `expired_time` bigint NOT NULL DEFAULT '-1',
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_user_passwd_user_info_id_uindex` (`user_id`)
+                                        `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+                                        `user_id` bigint unsigned NOT NULL COMMENT '用户信息id',
+                                        `user_passwd` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
+                                        `create_time` datetime NOT NULL,
+                                        `update_time` datetime NOT NULL,
+                                        `create_user_id` bigint unsigned NOT NULL,
+                                        `update_user_id` bigint unsigned NOT NULL,
+                                        `expired_time` bigint NOT NULL DEFAULT '-1',
+                                        `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                        `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
+                                        PRIMARY KEY (`id`),
+                                        UNIQUE KEY `security_user_passwd_user_info_id_uindex` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,16 +250,16 @@ DROP TABLE IF EXISTS `security_user_role_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_user_role_relation` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` bigint unsigned NOT NULL COMMENT '用户id',
-  `role_id` int unsigned NOT NULL COMMENT '角色id',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `create_user_id` bigint unsigned NOT NULL,
-  `update_user_id` bigint unsigned NOT NULL,
-  `is_status` tinyint unsigned NOT NULL DEFAULT '0',
-  `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+                                               `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+                                               `user_id` bigint unsigned NOT NULL COMMENT '用户id',
+                                               `role_id` int unsigned NOT NULL COMMENT '角色id',
+                                               `create_time` datetime NOT NULL,
+                                               `update_time` datetime NOT NULL,
+                                               `create_user_id` bigint unsigned NOT NULL,
+                                               `update_user_id` bigint unsigned NOT NULL,
+                                               `is_status` tinyint unsigned NOT NULL DEFAULT '0',
+                                               `is_deleted` tinyint unsigned NOT NULL DEFAULT '0',
+                                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='安全模块\n用户角色关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
