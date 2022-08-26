@@ -7,4 +7,5 @@ mybatis-plus:
       logic-delete-field: isDeleted
       logic-delete-value: 1 # 逻辑已删除
       logic-not-delete-value: 0 #逻辑未删除
+    banner: false
   mapper-locations: classpath*:mapper/*.xml

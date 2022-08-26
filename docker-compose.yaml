@@ -43,11 +43,25 @@ services:
 #      - $PWD/data:/data
 #      - $PWD/conf/redis.conf:/etc/redis/redis.conf
 
-  boson:
-    image: cgglyle/boson:dev
-    container_name: boson
+  neo4j:
+    image: neo4j
+    container_name: neo4j
+    privileged: true
     restart: always
-    ports:
-      - 8080:8080
     environment:
-      - "LOG_NAME=/var/log/boson"
+      - NEO4J_AUTH=neo4j/123456
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - "~/boson/neo4j/data:/var/lib/neo4j/data"
+      - "~/boson/neo4j/logs:/var/lib/neo4j/logs"
+
+#  boson:
+#    image: cgglyle/boson:dev
+#    container_name: boson
+#    restart: always
+#    ports:
+#      - 8080:8080
+#    environment:
+#      - "LOG_NAME=/var/log/boson"
