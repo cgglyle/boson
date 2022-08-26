@@ -8,10 +8,7 @@ import com.cgglyle.common.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -49,7 +46,7 @@ public class RoleInheritanceServiceImpl extends BaseServiceImpl<RoleInheritanceM
             List<Long> roleList = new ArrayList<>();
             // 添加自身进数组
             roleList.add(roleId);
-            getList(roleId, roleList, group);
+            getList(roleId, roleList, group, roleInheritance);
             List<Long> collect = roleList.stream().distinct().collect(Collectors.toList());
             roleInheritance.put(roleId, collect);
         });
@@ -62,14 +59,18 @@ public class RoleInheritanceServiceImpl extends BaseServiceImpl<RoleInheritanceM
      * @param roleList 返回角色列表
      * @param roleId id
      */
-    private void getList(Long roleId, List<Long> roleList, Map<Long, List<Long>> group){
+    private void getList(Long roleId, List<Long> roleList, Map<Long, List<Long>> group, Map<Long, List<Long>> roleInheritance){
         if (group.get(roleId).get(0).equals(ROLE_END)){
+            return;
+        }
+        if (roleInheritance.containsKey(roleId)){
+            roleList.addAll(roleInheritance.get(roleId));
             return;
         }
         List<Long> integers = group.get(roleId);
         integers.forEach(integer -> {
             roleList.add(integer);
-            getList(integer, roleList, group);
+            getList(integer, roleList, group, roleInheritance);
         });
     }
 }

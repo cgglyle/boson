@@ -5,7 +5,6 @@ import com.cgglyle.common.unity.status.ResultVo;
 import com.cgglyle.common.unity.status.SystemErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -88,19 +87,5 @@ public class UnityExceptionHandler {
     public ResultVo<String> exceptionHandler(ConstraintViolationException e) {
         log.error(ClientErrorCode.DATA_ERROR.getMsg(), e);
         return ResultVo.error(ClientErrorCode.DATA_ERROR, e);
-    }
-
-    /**
-     * 登录异常
-     * <p>
-     * 登录用户不存在
-     *
-     * @return 返回错误代码，错误信息，错误位置
-     */
-    @ExceptionHandler(value = UsernameNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResultVo<String> exceptionHandler(UsernameNotFoundException e) {
-        log.error(ClientErrorCode.USERNAME_NOTFOUND.getMsg(), e);
-        return ResultVo.error(ClientErrorCode.USERNAME_NOTFOUND, e);
     }
 }
