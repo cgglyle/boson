@@ -48,6 +48,18 @@ public class UnityExceptionHandler {
     }
 
     /**
+     * 系统 —— 空指针异常
+     * <p>
+     * 除以零异常
+     */
+    @ExceptionHandler(value = NullPointerException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultVo<String> exceptionHandler(NullPointerException e){
+        log.error(SystemErrorCode.NULL_POINTER_ERROR.getMsg(), e);
+        return ResultVo.error(SystemErrorCode.NULL_POINTER_ERROR);
+    }
+
+    /**
      * 客户端异常
      *
      * @param e {@link ClientException} 自定义客户端异常
