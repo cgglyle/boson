@@ -14,7 +14,6 @@ spring:
       idle-timeout: 3600000
       maximum-pool-size: 12
       minimum-idle: 4
-      connection-test-query: SELECT 1
 
   data:
     mongodb:
@@ -45,12 +44,12 @@ spring:
     enabled: true
     #若启动环境中的的数据库中有数据，但是没有flyway的历史表时，
     #false--启动会报错，true--继续生成flyway历史表完成脚本
-    baseline-on-migrate: false
+    baseline-on-migrate: true
     # 执行时标记的tag 默认为<<Flyway Baseline>>
     baseline-description: <<Flyway Baseline>>
     # 脚本位置
     locations: classpath:db/migration
     # 在迁移时，是否校验脚本，假设V1.0__初始.sql已经迁移过了，在下次启动时会校验该脚本是否有变更过，则抛出异常
-    validate-on-migrate: true
+    validate-on-migrate: false
     # 检测迁移脚本的路径是否存在，如不存在，则抛出异常
-    fail-on-missing-locations: true
+    fail-on-missing-locations: false

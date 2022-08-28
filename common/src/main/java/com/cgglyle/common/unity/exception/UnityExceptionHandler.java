@@ -27,12 +27,37 @@ public class UnityExceptionHandler {
      * <p>
      * 没有返回枚举类中的异常信息
      */
-
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultVo<String> exceptionHandler(Exception e){
         log.error("未定义异常", e);
         return ResultVo.error(SystemErrorCode.SYSTEM_ERROR);
+    }
+
+    /**
+     * 系统异常
+     *
+     * @param e {@link SystemException} 自定义客户端异常
+     * @return 返回错误代码，错误信息，不包含数据
+     */
+    @ExceptionHandler(value = SystemException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultVo<String> exceptionHandler(SystemException e){
+        log.error(SystemErrorCode.SYSTEM_ERROR.getMsg(), e);
+        return ResultVo.error(e.getErrorCode(), e.getErrorMassage());
+    }
+
+    /**
+     * 客户端异常
+     *
+     * @param e {@link ClientException} 自定义客户端异常
+     * @return 返回错误代码，错误信息，不包含数据
+     */
+    @ExceptionHandler(value = ClientException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResultVo<String> exceptionHandler(ClientException e) {
+        log.error(ClientErrorCode.CLIENT_ERROR.getMsg(), e);
+        return ResultVo.error(e.getErrorCode(), e.getErrorMassage());
     }
 
     /**
@@ -57,19 +82,6 @@ public class UnityExceptionHandler {
     public ResultVo<String> exceptionHandler(NullPointerException e){
         log.error(SystemErrorCode.NULL_POINTER_ERROR.getMsg(), e);
         return ResultVo.error(SystemErrorCode.NULL_POINTER_ERROR);
-    }
-
-    /**
-     * 客户端异常
-     *
-     * @param e {@link ClientException} 自定义客户端异常
-     * @return 返回错误代码，错误信息，不包含数据
-     */
-    @ExceptionHandler(value = ClientException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResultVo<String> exceptionHandler(ClientException e) {
-        log.error(ClientErrorCode.USERNAME_PASSWORD_ERROR.getMsg(), e);
-        return ResultVo.error(e.getErrorCode(), e.getErrorMassage());
     }
 
     /**

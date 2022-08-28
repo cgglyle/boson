@@ -1,14 +1,16 @@
 package com.cgglyle.common.unity.exception;
 
 import com.cgglyle.common.unity.status.StatusCode;
+import lombok.Getter;
 
 /**
  * 系统异常<p>
  * 自定义异常信息
  *
  * @author lyle
- * @date 2022/08/11
+ * @since  2022/08/11
  */
+@Getter
 public class SystemException extends BaseException{
     private final String errorCode;
     private final String errorMassage;

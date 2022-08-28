@@ -5,6 +5,7 @@ import com.cgglyle.security.service.DynamicAuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
@@ -35,7 +36,13 @@ public class DynamicAuthorization implements AuthorizationManager<RequestAuthori
     private static Boolean isAnonymousUser;
     private static Map<String, List<Long>> permissionRoleMap;
 
-    // 监听初始化成功事件，仅初始化一次
+    /**
+     * 初始化动态权限系统
+     * <p>
+     * 监听{@link ContextRefreshedEvent}事件
+     * Order顺序越小越先执行
+     */
+    @Order(0)
     @EventListener(ContextRefreshedEvent.class)
     public void initialization(){
         permissionRoleMap = dynamicAuthorizationService.permissionList();
@@ -100,14 +107,22 @@ public class DynamicAuthorization implements AuthorizationManager<RequestAuthori
 
     /**
      * 判断用户是否拥有角色
+     * <p>
+     * 如果地址需要<code>anonymous</code>权限，在开启<code>anonymous</code>权限的情况下会直接放行。
+     * 如果角色拥有<code>administrator</code>权限也会直接放行。
      *
      * @param roleInheritanceList url需要的角色列表
      * @param authority 用户角色
      * @return 授权模型
      */
     private AuthorizationDecision verify(List<Long> roleInheritanceList, String authority){
+        if (!authority.equals("ROLE_ANONYMOUS")){
+            if (Long.valueOf(authority).equals(1L)){
+                return new AuthorizationDecision(true);
+            }
+        }
         if (isAnonymousUser){
-            if (roleInheritanceList.stream().anyMatch(id -> id.equals(7L) || id.toString().equals(authority))) {
+            if (roleInheritanceList.stream().anyMatch(id -> id.equals(3L) || id.toString().equals(authority))) {
                 return new AuthorizationDecision(true);
             }
         }

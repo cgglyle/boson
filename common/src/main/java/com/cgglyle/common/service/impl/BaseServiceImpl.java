@@ -1,5 +1,7 @@
 package com.cgglyle.common.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cgglyle.common.model.BaseEntity;
@@ -27,6 +29,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity>
     public boolean save(T entity) {
         entity.setIsStatus(false);
         return super.save(entity);
+    }
+
+    @Override
+    public boolean update(Wrapper<T> wrapper) {
+        if (wrapper instanceof UpdateWrapper<T>){
+            ((UpdateWrapper<T>) wrapper).set("update_time", LocalDateTime.now());
+            return super.update(wrapper);
+        }
+        return super.update(wrapper);
     }
 
     /**

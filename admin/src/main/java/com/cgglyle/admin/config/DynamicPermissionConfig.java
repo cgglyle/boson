@@ -1,5 +1,6 @@
 package com.cgglyle.admin.config;
 
+import com.cgglyle.admin.enums.ConfigEnum;
 import com.cgglyle.admin.model.entity.PermissionEntity;
 import com.cgglyle.admin.model.entity.UserEntity;
 import com.cgglyle.admin.model.entity.UserPasswdEntity;
@@ -34,6 +35,7 @@ public class DynamicPermissionConfig {
     private final IUserPasswdService userPasswdService;
     private final IUserService userService;
     private final IConfigService configService;
+    private final IRoleNeoService roleNeoService;
 
     /**
      * 动态权限授权
@@ -44,16 +46,17 @@ public class DynamicPermissionConfig {
         return new DynamicAuthorizationService() {
             @Override
             public Map<String, List<Long>> permissionList() {
-                Map<Long, List<Long>> roelInheritanceMap = roleInheritanceService.putRoleInheritanceToMap();
+                Map<Long, List<Long>> longListMap = roleInheritanceService.putRoleInheritanceToMap();
+//                Map<Long, List<Long>> longListMap = roleNeoService.roleParentList();
                 return permissionService.list().stream()
                         .collect(Collectors.toMap(PermissionEntity::getPermissionUrl,
-                                permissionEntity -> roelInheritanceMap.get(rolePermissionRelationService
+                                permissionEntity -> longListMap.get(rolePermissionRelationService
                                         .getRoleIdByPermissionId(permissionEntity.getId()))));
             }
 
             @Override
             public Boolean isAnonymousUser() {
-                return Boolean.valueOf(configService.getValueByKey("isAnonymousUser"));
+                return Boolean.valueOf(configService.getValueByKey(ConfigEnum.IS_ANONYMOUS_USER.getMsg()));
             }
         };
     }

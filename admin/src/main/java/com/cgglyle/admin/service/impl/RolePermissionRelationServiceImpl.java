@@ -23,9 +23,9 @@ public class RolePermissionRelationServiceImpl extends BaseServiceImpl<RolePermi
         QueryWrapper<RolePermissionRelationEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("permission_id", permissionId);
         RolePermissionRelationEntity one = this.getOne(wrapper);
-        // 如果没有配置权限，默认提供7L匿名权限
+        // 如果没有配置权限，默认提供3L匿名权限
         if (one == null){
-            return 7L;
+            return 3L;
         }
         return one.getRoleId();
     }

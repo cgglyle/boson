@@ -28,7 +28,7 @@ import java.util.Map;
  * @author lyle
  * @since 2022-08-14
  */
-@Tag(name = "RoleInheritance")
+@Tag(name = "角色继承关系控制")
 @Slf4j
 @Validated
 @CrossOrigin

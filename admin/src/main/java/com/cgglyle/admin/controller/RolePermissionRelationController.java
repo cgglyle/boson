@@ -27,7 +27,7 @@ import java.util.List;
  * @author lyle
  * @since 2022-08-21
  */
-@Tag(name = "RolePermissionRelationController", description = "角色权限控制器")
+@Tag(name = "角色权限控制", description = "角色权限控制器")
 @Slf4j
 @Validated
 @CrossOrigin

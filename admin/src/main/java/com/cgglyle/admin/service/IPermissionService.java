@@ -20,4 +20,12 @@ public interface IPermissionService extends BaseService<PermissionEntity> {
      * @return 权限map
      */
     Map<String, Long> putPermissionToMap();
+
+    /**
+     * 判断数据库中url是否存在
+     *
+     * @param url 权限url
+     * @return true, false
+     */
+    boolean isPermissionExist(String url);
 }

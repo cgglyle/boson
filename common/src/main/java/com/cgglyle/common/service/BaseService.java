@@ -22,6 +22,14 @@ public interface BaseService<T> extends IService<T> {
     boolean save(T entity);
 
     /**
+     * 根据wrapper更新一个数据
+     *
+     * @param wrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
+     * @return <code>true</code>成功<br><code>false</code>失败
+     */
+    boolean update(Wrapper<T> wrapper);
+
+    /**
      * 根据实体更新一条数据
      *
      * @param entity 实体

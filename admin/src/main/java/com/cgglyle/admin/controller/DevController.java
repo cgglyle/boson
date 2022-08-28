@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- *  前端控制器
- * </p>
+ * 开发测试控制器
  *
  * @author lyle
- * @since 2022-08-17
+ * @since 2022/08/28
  */
-@Tag(name = "用户密码控制")
+
+@Tag(name = "开发测试接口", description = "用于开发的测试接口，不部署到生产环境")
 @Slf4j
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/dev")
 @RequiredArgsConstructor
-public class UserPasswdController {
+public class DevController {
 
 }

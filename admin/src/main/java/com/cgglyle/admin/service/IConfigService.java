@@ -30,4 +30,13 @@ public interface IConfigService extends BaseService<ConfigEntity> {
      */
     String getValueByKey(String key);
 
+    /**
+     * 根据key设置value
+     *
+     * @param key key
+     * @param value value
+     * @return ture，false
+     */
+    boolean setValueByKey(String key ,String value);
+
 }

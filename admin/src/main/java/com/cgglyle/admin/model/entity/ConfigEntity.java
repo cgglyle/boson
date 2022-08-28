@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cgglyle.common.model.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -19,6 +21,8 @@ import lombok.Setter;
 @Setter
 @TableName("security_config")
 @Schema(name = "ConfigEntity", description = "$!{table.comment}")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConfigEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

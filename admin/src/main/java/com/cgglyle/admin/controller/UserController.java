@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author lylecgg
  */
-@Tag(name = "User")
+@Tag(name = "用户控制")
 @Slf4j
 @Validated
 @CrossOrigin

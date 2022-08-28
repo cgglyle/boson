@@ -1,6 +1,7 @@
 package com.cgglyle.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cgglyle.admin.mapper.ConfigMapper;
 import com.cgglyle.admin.model.entity.ConfigEntity;
 import com.cgglyle.admin.service.IConfigService;
@@ -45,9 +46,28 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper, ConfigEntit
     @Override
     public String getValueByKey(String key) {
         QueryWrapper<ConfigEntity> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.select("config_value");
         queryWrapper.eq("config_key", key);
-        return super.getOne(queryWrapper).getConfigValue();
+        ConfigEntity one = super.getOne(queryWrapper);
+        if (one == null){
+            return null;
+        } else {
+            return super.getOne(queryWrapper).getConfigValue();
+        }
+    }
+
+    /**
+     * 根据key设置value
+     *
+     * @param key   key
+     * @param value value
+     * @return ture，false
+     */
+    @Override
+    public boolean setValueByKey(String key, String value) {
+        UpdateWrapper<ConfigEntity>  wrapper = new UpdateWrapper<>();
+        wrapper.eq("config_key", key);
+        wrapper.set("config_value", value);
+        return super.update(wrapper);
     }
 
 
