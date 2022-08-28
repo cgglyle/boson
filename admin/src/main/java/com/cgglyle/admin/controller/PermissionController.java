@@ -1,7 +1,10 @@
 package com.cgglyle.admin.controller;
 
 import com.cgglyle.admin.model.entity.PermissionEntity;
+import com.cgglyle.admin.model.entity.RoleNeoEntity;
 import com.cgglyle.admin.query.PermissionSaveQuery;
+import com.cgglyle.admin.query.RoleNeoSaveQuery;
+import com.cgglyle.admin.service.IPermissionNeoService;
 import com.cgglyle.admin.service.IPermissionService;
 import com.cgglyle.admin.vo.RoleInheritanceVo;
 import com.cgglyle.logger.annotaion.UnityLog;
@@ -19,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -29,7 +33,7 @@ import java.util.List;
  * @author lyle
  * @since 2022-08-21
  */
-@Tag(name = "Permission", description = "URL权限控制器")
+@Tag(name = "权限控制", description = "URL权限控制器")
 @Slf4j
 @Validated
 @CrossOrigin
@@ -39,6 +43,7 @@ import java.util.List;
 public class PermissionController {
     private final IPermissionService permissionService;
     private final ApplicationContext applicationContext;
+    private final IPermissionNeoService permissionNeoService;
     private static final String MODULE = "安全-URL权限";
 
 
@@ -88,5 +93,30 @@ public class PermissionController {
     @GetMapping("/permission/change")
     public void changeEvent() {
         applicationContext.publishEvent(new DynamicAuthorizationChangeEvent(true));
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = MODULE, method = LogMethodEnum.SAVE, explain = "NEO添加权限")
+    @Operation(summary = "NEO添加权限")
+    @PostMapping("/neo/permission")
+    public RoleNeoEntity neoSave(@RequestBody @Valid RoleNeoSaveQuery query, BindingResult bindingResult) {
+        permissionNeoService.save(null);
+        return null;
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = MODULE, method = LogMethodEnum.SAVE, explain = "NEO添加权限关系")
+    @Operation(summary = "NEO添加权限关系")
+    @PostMapping("/neo/permission/relationship")
+    public void neoSave(@RequestParam @NotNull Long toId, @RequestParam @NotNull Long formId) {
+        permissionNeoService.saveRelationship(toId, formId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UnityLog(module = MODULE, method = LogMethodEnum.DELETED, explain = "删除所有权限")
+    @Operation(summary = "删除所有权限",description = "无需开发界面，仅供测试使用")
+    @DeleteMapping("/neo/permission/all")
+    public void neoRemoveAllPermission() {
+        permissionNeoService.deletedAllPermission();
     }
 }

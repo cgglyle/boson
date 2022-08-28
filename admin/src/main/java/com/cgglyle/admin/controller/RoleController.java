@@ -1,7 +1,11 @@
 package com.cgglyle.admin.controller;
 
 import com.cgglyle.admin.model.entity.RoleEntity;
+import com.cgglyle.admin.model.entity.RoleNeoEntity;
+import com.cgglyle.admin.query.RoleNeoSaveQuery;
 import com.cgglyle.admin.query.RoleSaveQuery;
+import com.cgglyle.admin.service.IRoleService;
+import com.cgglyle.admin.service.IRoleNeoService;
 import com.cgglyle.admin.vo.RoleVo;
 import com.cgglyle.logger.annotaion.UnityLog;
 import com.cgglyle.logger.enums.LogMethodEnum;
@@ -16,13 +20,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author lyle
- * @date 2022/08/13
+ * @since  2022/08/13
  */
-@Tag(name = "Role", description = "角色控制器")
+@Tag(name = "角色控制", description = "角色控制器")
 @Slf4j
 @Validated
 @CrossOrigin
@@ -31,7 +37,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleController {
 
-    private final com.cgglyle.admin.service.IRoleService IRoleService;
+    private final IRoleService IRoleService;
+
+    private final IRoleNeoService IRoleNeoService;
 
     private static final String SECURITY_ROLE = "安全-角色模块";
 
@@ -74,5 +82,60 @@ public class RoleController {
     @GetMapping("/roles/counts")
     public long count() {
         return IRoleService.count();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SAVE, explain = "NEO添加角色")
+    @Operation(summary = "NEO添加角色")
+    @PostMapping("/neo/roles")
+    public RoleNeoEntity neoSave(@RequestBody @Valid RoleNeoSaveQuery query, BindingResult bindingResult) {
+        RoleNeoEntity roleEntity = new RoleNeoEntity();
+        BeanUtils.copyProperties(query, roleEntity);
+        return IRoleNeoService.save(roleEntity);
+    }
+
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "NEO查看角色")
+    @Operation(summary = "NEO查看角色")
+    @GetMapping("/neo/roles")
+    public List<RoleNeoEntity> neoList() {
+        return IRoleNeoService.list();
+    }
+
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "NEO根据ID查找角色")
+    @Operation(summary = "NEO根据ID查找角色")
+    @GetMapping("/neo/roles/{id}")
+    public Optional<RoleNeoEntity> neoGetById(@PathVariable(value = "id") Long id){
+        return IRoleNeoService.findById(id);
+    }
+
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SEARCH, explain = "NEO根据ID查找角色所有父角色")
+    @Operation(summary = "NEO根据ID查找角色所有父角色")
+    @GetMapping("/neo/roles/{id}/parent")
+    public List<RoleNeoEntity> neoGetRoleAllParentById(@PathVariable(value = "id") Long id){
+        return IRoleNeoService.getRoleNeoEntityAllParentByRoleId(id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.DELETED, explain = "NEO除角色")
+    @Operation(summary = "NEO删除角色")
+    @DeleteMapping("/neo/roles")
+    public void neoRemove(Long id) {
+        IRoleNeoService.deletedById(id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.DELETED, explain = "NEO删除角色关系")
+    @Operation(summary = "NEO删除角色关系")
+    @DeleteMapping("/neo/roles/relationship")
+    public void neoRemoveRelationship(@RequestParam @NotNull Long toId, @RequestParam @NotNull Long formId) {
+        IRoleNeoService.deletedRelationship(toId, formId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @UnityLog(module = SECURITY_ROLE, method = LogMethodEnum.SAVE, explain = "NEO添加角色关系")
+    @Operation(summary = "NEO添加角色关系")
+    @PostMapping("/neo/roles/relationship")
+    public void neoSave(@RequestParam @NotNull Long toId, @RequestParam @NotNull Long formId) {
+        IRoleNeoService.saveRelationship(toId, formId);
     }
 }
