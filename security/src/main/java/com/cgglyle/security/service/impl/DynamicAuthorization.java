@@ -53,6 +53,7 @@ public class DynamicAuthorization implements AuthorizationManager<RequestAuthori
     @EventListener(DynamicAuthorizationChangeEvent.class)
     public void printLog() {
         permissionRoleMap = dynamicAuthorizationService.permissionList();
+        isAnonymousUser = dynamicAuthorizationService.isAnonymousUser();
     }
 
     /**

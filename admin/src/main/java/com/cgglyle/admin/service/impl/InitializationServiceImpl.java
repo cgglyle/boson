@@ -6,6 +6,7 @@ import com.cgglyle.admin.query.InitAdminSaveQuery;
 import com.cgglyle.admin.service.*;
 import com.cgglyle.common.unity.exception.SystemException;
 import com.cgglyle.common.unity.status.SystemErrorCode;
+import com.cgglyle.security.event.DynamicAuthorizationChangeEvent;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -111,37 +112,7 @@ public class InitializationServiceImpl implements IInitializationService {
         if (count != 0){
             return;
         }
-        RequestMappingHandlerMapping mapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
-        // 拿到Handler适配器中的全部方法
-        Map<RequestMappingInfo, HandlerMethod> methodMap = mapping.getHandlerMethods();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : methodMap.entrySet()) {
-            RequestMappingInfo mappingInfo = entry.getKey();
-            assert mappingInfo.getPatternsCondition() != null;
-            StringBuilder builder = new StringBuilder();
-            builder.append(mappingInfo.getMethodsCondition());
-            builder.deleteCharAt(0);
-            builder.deleteCharAt(builder.length() - 1);
-            builder.append(((PathPattern) mappingInfo.getPathPatternsCondition().getPatterns().toArray()[0]).getPatternString());
-            List<PermissionEntity> permissionEntities = new ArrayList<>();
-            if (!permissionService.isPermissionExist(builder.toString())) {
-                PermissionEntity entity = new PermissionEntity();
-                entity.setPermissionUrl(builder.toString());
-                entity.setCreateUserId(1L);
-                entity.setUpdateUserId(1L);
-                HandlerMethod value = entry.getValue();
-                Method method = value.getMethod();
-                Operation annotation = method.getAnnotation(Operation.class);
-                if (annotation == null) {
-                    entity.setPermissionDescription("");
-                    permissionEntities.add(entity);
-                } else {
-                    String summary = annotation.summary();
-                    entity.setPermissionDescription(summary);
-                    permissionEntities.add(entity);
-                }
-            }
-            permissionService.saveBatch(permissionEntities);
-        }
+        permissionUpdate();
         log.info("权限系统初始化完成！");
     }
 
@@ -208,5 +179,40 @@ public class InitializationServiceImpl implements IInitializationService {
         roleInheritance.setRoleParentId(2L);
         roleInheritanceService.save(roleInheritance);
         log.info("角色继承系统初始化完成！");
+    }
+
+    @EventListener(DynamicAuthorizationChangeEvent.class)
+    public void permissionUpdate(){
+        RequestMappingHandlerMapping mapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
+        // 拿到Handler适配器中的全部方法
+        Map<RequestMappingInfo, HandlerMethod> methodMap = mapping.getHandlerMethods();
+        for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : methodMap.entrySet()) {
+            RequestMappingInfo mappingInfo = entry.getKey();
+            assert mappingInfo.getPatternsCondition() != null;
+            StringBuilder builder = new StringBuilder();
+            builder.append(mappingInfo.getMethodsCondition());
+            builder.deleteCharAt(0);
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append(((PathPattern) mappingInfo.getPathPatternsCondition().getPatterns().toArray()[0]).getPatternString());
+            List<PermissionEntity> permissionEntities = new ArrayList<>();
+            if (!permissionService.isPermissionExist(builder.toString())) {
+                PermissionEntity entity = new PermissionEntity();
+                entity.setPermissionUrl(builder.toString());
+                entity.setCreateUserId(1L);
+                entity.setUpdateUserId(1L);
+                HandlerMethod value = entry.getValue();
+                Method method = value.getMethod();
+                Operation annotation = method.getAnnotation(Operation.class);
+                if (annotation == null) {
+                    entity.setPermissionDescription("");
+                    permissionEntities.add(entity);
+                } else {
+                    String summary = annotation.summary();
+                    entity.setPermissionDescription(summary);
+                    permissionEntities.add(entity);
+                }
+            }
+            permissionService.saveBatch(permissionEntities);
+        }
     }
 }
