@@ -2,6 +2,7 @@ package com.cgglyle.logger.aop;
 
 import com.cgglyle.common.model.UserInfo;
 import com.cgglyle.logger.annotaion.UnityLog;
+import com.cgglyle.logger.enums.LogFormat;
 import com.cgglyle.logger.enums.LogFormatEnum;
 import com.cgglyle.logger.event.UnityLogEvent;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import java.util.*;
  * 统一日志AOP
  *
  * @author lyle
- * @date 2022/08/13
+ * @since 2022/08/13
  */
 @Slf4j
 @Aspect
@@ -34,7 +35,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UnityLogAspect {
 
-    private final Map<String, Object> logContext = new HashMap<>();
+    private final Map<LogFormat, Object> logContext = new HashMap<>();
     private final ApplicationContext applicationContext;
 
     /**
@@ -63,13 +64,13 @@ public class UnityLogAspect {
         WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
         logContext.clear();
         if ("anonymousUser".equals(principal)){
-            logContext.put(LogFormatEnum.USER_ID.getFormName(), "anonymousUser");
+            logContext.put(LogFormatEnum.USER_ID, "anonymousUser");
         } else {
             UserInfo userInfo = (UserInfo) principal;
-            logContext.put(LogFormatEnum.USER_ID.getFormName(), userInfo.getUserId());
+            logContext.put(LogFormatEnum.USER_ID, userInfo.getUserId());
         }
-        logContext.put(LogFormatEnum.START_TIME.getFormName(), LocalDateTime.now());
-        logContext.put(LogFormatEnum.IP.getFormName(), details.getRemoteAddress());
+        logContext.put(LogFormatEnum.START_TIME, LocalDateTime.now());
+        logContext.put(LogFormatEnum.IP, details.getRemoteAddress());
         joinContext(joinPoint, unityLog);
     }
 
@@ -78,7 +79,7 @@ public class UnityLogAspect {
      */
     @AfterReturning(value = "unityLogCut()", returning = "body")
     public void doAfterReturning(Object body) {
-        logContext.put(LogFormatEnum.BODY.getFormName(), body);
+        logContext.put(LogFormatEnum.BODY, body);
     }
 
     /**
@@ -89,7 +90,7 @@ public class UnityLogAspect {
         long startTime = System.currentTimeMillis();
         Object body = proceedingJoinPoint.proceed();
         long takeTime = System.currentTimeMillis() - startTime;
-        logContext.put(LogFormatEnum.TIME.getFormName(), takeTime);
+        logContext.put(LogFormatEnum.TIME, takeTime);
         applicationContext.publishEvent(new UnityLogEvent(logContext));
         return body;
     }
@@ -99,7 +100,7 @@ public class UnityLogAspect {
      */
     @AfterThrowing(value = "unityExceptionLogCut()", throwing = "throwable")
     public void doAfterThrowing(Throwable throwable) {
-        logContext.put(LogFormatEnum.EXCEPTION.getFormName(), throwable);
+        logContext.put(LogFormatEnum.EXCEPTION, throwable);
         applicationContext.publishEvent(new UnityLogEvent(logContext));
     }
 
@@ -115,17 +116,17 @@ public class UnityLogAspect {
         HttpServletRequest httpServletRequest = (HttpServletRequest) requestAttributes.
                 resolveReference(RequestAttributes.REFERENCE_REQUEST);
         assert httpServletRequest != null;
-        logContext.put(LogFormatEnum.MODULE.getFormName(), unityLog.module());
-        logContext.put(LogFormatEnum.METHOD.getFormName(), unityLog.method().getMethodName());
-        logContext.put(LogFormatEnum.EXPLAIN.getFormName(), unityLog.explain());
-        logContext.put(LogFormatEnum.URL.getFormName(), httpServletRequest.getRequestURL());
-        logContext.put(LogFormatEnum.URI.getFormName(), httpServletRequest.getRequestURI());
-        logContext.put(LogFormatEnum.CLASS_NAME.getFormName(), joinPoint.getSignature().getDeclaringTypeName() + "." +
+        logContext.put(LogFormatEnum.MODULE, unityLog.module());
+        logContext.put(LogFormatEnum.METHOD, unityLog.method().getMethodName());
+        logContext.put(LogFormatEnum.EXPLAIN, unityLog.explain());
+        logContext.put(LogFormatEnum.URL, httpServletRequest.getRequestURL());
+        logContext.put(LogFormatEnum.URI, httpServletRequest.getRequestURI());
+        logContext.put(LogFormatEnum.CLASS_NAME, joinPoint.getSignature().getDeclaringTypeName() + "." +
                 joinPoint.getSignature().getName());
         // 移除数据验证信息
         List<Object> objects = Arrays.asList(joinPoint.getArgs());
         List<Object> list = new ArrayList<>(objects);
         list.removeIf(m->m.getClass().equals(BeanPropertyBindingResult.class));
-        logContext.put(LogFormatEnum.ARGS.getFormName(), Arrays.toString(list.toArray()));
+        logContext.put(LogFormatEnum.ARGS, Arrays.toString(list.toArray()));
     }
 }

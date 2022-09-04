@@ -9,53 +9,39 @@ import lombok.Getter;
  * @since 2022/08/16
  */
 @Getter
-public enum LogFormatEnum {
+public enum LogFormatEnum implements LogFormat{
     /**
-     * 开始 (业务日志)
+     * 开始时间
      */
-    START("(业务日志)"),
+    START_TIME,
     /**
-     * [开始时间]=
+     * 模块
      */
-    START_TIME(" [开始时间]="),
+    MODULE,
     /**
-     * [模块]=
+     * 方式
      */
-    MODULE(" [module]="),
+    METHOD,
     /**
-     * [方式]=
+     * 介绍
      */
-    METHOD( " [method]="),
+    EXPLAIN,
+    URL,
+    URI,
+    CLASS_NAME,
     /**
-     * [介绍]=
+     * 入参
      */
-    EXPLAIN(" [explain]="),
-    URL(" [url]="),
-    URI(" [uri]="),
-    CLASS_NAME(" [className]="),
+    ARGS,
     /**
-     * [入参]=
+     * 出参
      */
-    ARGS(" [入参]="),
-    /**
-     * [出参]=
-     */
-    BODY(" [出参]="),
-    TIME(" [耗时]="),
-    EXCEPTION(" (异常)"),
-    MS("ms"),
-    /**
-     * [操作者ID]=
-     */
-    USER_ID(" [操作者ID]="),
-    USER_NAME(" [用户名字]="),
-    OPERATION_TIME( " [操作时间]="),
-    IP(" [IP]="),
-    ERROR(" [错误]=")
-    ;
-    private final String formName;
-
-    LogFormatEnum(String formName) {
-        this.formName = formName;
-    }
+    BODY,
+    TIME,
+    EXCEPTION,
+    USER_ID,
+    USER_NAME,
+    OPERATION_TIME,
+    IP,
+    ERROR
 }

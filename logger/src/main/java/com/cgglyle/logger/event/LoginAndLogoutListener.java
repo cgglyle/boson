@@ -2,6 +2,7 @@ package com.cgglyle.logger.event;
 
 import com.cgglyle.common.model.UserInfo;
 import com.cgglyle.common.unity.status.ClientErrorCode;
+import com.cgglyle.logger.enums.LogFormat;
 import com.cgglyle.logger.enums.LogFormatEnum;
 import com.cgglyle.logger.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +35,11 @@ public class LoginAndLogoutListener {
         Object principal = authentication.getPrincipal();
         UserInfo userInfo = (UserInfo) principal;
         WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
-        log.info("(登录日志)" +
-                LogFormatEnum.IP.getFormName() + details.getRemoteAddress() +
-                LogFormatEnum.USER_ID.getFormName() + userInfo.getUserId() +
-                LogFormatEnum.USER_NAME.getFormName() + userInfo.getUsername() +
-                LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
+        log.info("[登录日志] [IP]={} [用户ID]={} [用户名]={} [登录时间]={}",
+                details.getRemoteAddress(),
+                userInfo.getUserId(),
+                userInfo.getUsername(),
+                DateUtils.timestampToDate(event.getTimestamp()));
     }
 
     @Async
@@ -46,9 +47,9 @@ public class LoginAndLogoutListener {
     @EventListener(AbstractAuthenticationFailureEvent.class)
     public void printLog(AbstractAuthenticationFailureEvent event) {
         String message;
-        if (event instanceof AuthenticationFailureBadCredentialsEvent){
+        if (event instanceof AuthenticationFailureBadCredentialsEvent) {
             message = ClientErrorCode.USERNAME_PASSWORD_ERROR.getMsg();
-        } else if (event instanceof AuthenticationFailureDisabledEvent){
+        } else if (event instanceof AuthenticationFailureDisabledEvent) {
             message = ClientErrorCode.DISABLED.getMsg();
         } else if (event instanceof AuthenticationFailureExpiredEvent) {
             message = ClientErrorCode.ACCOUNT_EXPIRED.getMsg();
@@ -62,13 +63,12 @@ public class LoginAndLogoutListener {
             message = "未知异常";
         }
         UsernamePasswordAuthenticationToken source = (UsernamePasswordAuthenticationToken) event.getSource();
-        String name = source.getName();
         WebAuthenticationDetails details = (WebAuthenticationDetails) source.getDetails();
-        log.info("(登录日志)" +
-                LogFormatEnum.IP.getFormName() + details.getRemoteAddress() +
-                LogFormatEnum.USER_NAME.getFormName() + name +
-                LogFormatEnum.ERROR.getFormName() + message +
-                LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
+        log.info("[登录日志](!错误!) [IP]={} [尝试登录用户名]={} [错误原因]={} [登录时间]={}",
+                details.getRemoteAddress(),
+                source.getName(),
+                message,
+                DateUtils.timestampToDate(event.getTimestamp()));
     }
 
     @Async
@@ -79,24 +79,25 @@ public class LoginAndLogoutListener {
         Object principal = authentication.getPrincipal();
         UserInfo userInfo = (UserInfo) principal;
         WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
-        log.info("(登出日志)" +
-                LogFormatEnum.IP.getFormName() + details.getRemoteAddress() +
-                LogFormatEnum.USER_ID.getFormName() + userInfo.getUserId() +
-                LogFormatEnum.USER_NAME.getFormName() + userInfo.getUsername() +
-                LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
+        log.info("[登出日志] [IP]={} [用户ID]={} [用户名]={} [登录时间]={}",
+                details.getRemoteAddress(),
+                userInfo.getUserId(),
+                userInfo.getUsername(),
+                DateUtils.timestampToDate(event.getTimestamp()));
     }
 
     @Async
     @Order
     @EventListener(AccessDeniedEvent.class)
     public void printLog(AccessDeniedEvent event) {
-        Map<String, Object> source = (Map<String, Object>) event.getSource();
-        log.info("(无权限日志)" +
-                LogFormatEnum.IP.getFormName() + source.get(LogFormatEnum.IP.getFormName()) +
-                LogFormatEnum.USER_NAME.getFormName() + source.get(LogFormatEnum.USER_NAME.getFormName()) +
-                " [请求方式]=" + source.get(" [请求方式]=") +
-                LogFormatEnum.URI.getFormName() + source.get(LogFormatEnum.URI.getFormName()) +
-                LogFormatEnum.ERROR.getFormName() + ClientErrorCode.FORBIDDEN.getMsg() +
-                LogFormatEnum.OPERATION_TIME.getFormName() + DateUtils.timestampToDate(event.getTimestamp()));
+        Map<LogFormat, Object> source = (Map<LogFormat, Object>) event.getSource();
+        log.info("[业务日志](!越权!) [IP]={} [用户名]={} [请求方式]={} [URI]={} [越权原因]={} [操作时间]={}",
+                source.get(LogFormatEnum.IP),
+                source.get(LogFormatEnum.USER_NAME),
+                source.get(LogFormatEnum.METHOD),
+                source.get(LogFormatEnum.URI),
+                ClientErrorCode.FORBIDDEN.getMsg(),
+                DateUtils.timestampToDate(event.getTimestamp())
+        );
     }
 }

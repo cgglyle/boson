@@ -1,5 +1,6 @@
 package com.cgglyle.logger.event;
 
+import com.cgglyle.logger.enums.LogFormat;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ public class AccessDeniedEvent extends ApplicationEvent {
      * @param source the object on which the event initially occurred or with
      *               which the event is associated (never {@code null})
      */
-    public AccessDeniedEvent(Map<String, Object> source) {
+    public AccessDeniedEvent(Map<LogFormat, Object> source) {
         super(source);
     }
 }

@@ -2,6 +2,7 @@ package com.cgglyle.security.handler;
 
 import com.cgglyle.common.unity.status.ClientErrorCode;
 import com.cgglyle.common.unity.status.ResultVo;
+import com.cgglyle.logger.enums.LogFormat;
 import com.cgglyle.logger.enums.LogFormatEnum;
 import com.cgglyle.logger.event.AccessDeniedEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,11 +48,11 @@ public class LoginAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=utf-8");
         PrintWriter writer = response.getWriter();
         writer.write(objectMapper.writeValueAsString(resultVo));
-        Map<String, Object> map = new HashMap<>();
-        map.put(LogFormatEnum.IP.getFormName(), request.getRemoteAddr());
-        map.put(LogFormatEnum.URI.getFormName(), request.getRequestURI());
-        map.put(LogFormatEnum.USER_NAME.getFormName(), request.getRemoteUser());
-        map.put(" [请求方式]=", request.getMethod());
+        Map<LogFormat, Object> map = new HashMap<>();
+        map.put(LogFormatEnum.IP, request.getRemoteAddr());
+        map.put(LogFormatEnum.URI, request.getRequestURI());
+        map.put(LogFormatEnum.USER_NAME, request.getRemoteUser());
+        map.put(LogFormatEnum.METHOD, request.getMethod());
         context.publishEvent(new AccessDeniedEvent(map));
     }
 }

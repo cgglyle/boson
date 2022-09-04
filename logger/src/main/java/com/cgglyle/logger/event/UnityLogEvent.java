@@ -1,5 +1,6 @@
 package com.cgglyle.logger.event;
 
+import com.cgglyle.logger.enums.LogFormat;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class UnityLogEvent extends ApplicationEvent {
      * @param source the object on which the event initially occurred or with
      *               which the event is associated (never {@code null})
      */
-    public UnityLogEvent(Map<String, Object> source) {
+    public UnityLogEvent(Map<LogFormat, Object> source) {
         super(source);
     }
 }
